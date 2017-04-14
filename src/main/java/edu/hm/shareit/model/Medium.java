@@ -6,19 +6,15 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 /**
  *
  */
-@JsonTypeInfo(
-        use = JsonTypeInfo.Id.MINIMAL_CLASS,
-        include = JsonTypeInfo.As.WRAPPER_OBJECT
-)
-@JsonSubTypes({
-        @JsonSubTypes.Type(value = Book.class, name = "book"),
-        @JsonSubTypes.Type(value = Disc.class, name = "disc")
-})
 public class Medium {
     private String title;
 
     public Medium(String title) {
         this.title = title;
+    }
+
+    public String getTitle() {
+        return title;
     }
 
     @Override

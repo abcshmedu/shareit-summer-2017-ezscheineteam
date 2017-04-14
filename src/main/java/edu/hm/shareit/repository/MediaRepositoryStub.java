@@ -7,6 +7,9 @@ import edu.hm.shareit.model.Medium;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Just a mock class as long as we don't have a real Repository.
+ */
 public class MediaRepositoryStub implements MediaRepository {
     @Override
     public List<Medium> findAllMedia() {
@@ -19,5 +22,12 @@ public class MediaRepositoryStub implements MediaRepository {
         media.add(d);
 
         return media;
+    }
+
+    @Override
+    public Book findBook(String isbn) {
+        if (isbn.equals("1234"))
+            return new Book("Die Eule mit der Beule", "Susanne Weber", "1234");
+        return null;
     }
 }
