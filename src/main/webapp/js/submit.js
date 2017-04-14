@@ -21,7 +21,7 @@ var submitNewBook = function() {
         contentType: 'application/json; charset=UTF-8',
         data: json
         })
-        .done(() => {
+        .done( () => {
 			$("input[name=title]").val("");
 			$("input[name=author]").val("");
 			$("input[name=isbn]").val("");
