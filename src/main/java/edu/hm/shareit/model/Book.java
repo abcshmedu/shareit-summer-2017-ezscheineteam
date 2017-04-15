@@ -8,6 +8,15 @@ public class Book extends Medium {
         this("Unknown", "Unknown", "Unknown");
     }
 
+    @Override
+    public String toString() {
+        return "{" +
+                "title='" + getTitle() + '\'' +
+                ", author='" + author + '\'' +
+                ", isbn='" + isbn + '\'' +
+                '}';
+    }
+
     public Book(String title, String author, String isbn) {
         super(title);
         this.author = author;
