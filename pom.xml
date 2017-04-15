@@ -24,11 +24,31 @@
       <version>20140107</version>
     </dependency>
     <dependency>
-      <groupId>org.glassfish.jersey.containers</groupId>
-      <artifactId>jersey-container-jetty-servlet </artifactId>
-      <version>2.25.1</version>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-server</artifactId>
+      <version>9.4.2.v20170220</version>
     </dependency>
-	<dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-servlet</artifactId>
+      <version>9.4.2.v20170220</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-webapp</artifactId>
+      <version>9.4.2.v20170220</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-util</artifactId>
+      <version>9.4.2.v20170220</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-servlets</artifactId>
+      <version>9.4.2.v20170220</version>
+    </dependency>
+    <dependency>
 	    <groupId>org.mockito</groupId>
 	    <artifactId>mockito-core</artifactId>
 	    <version>2.7.21</version>
@@ -37,6 +57,11 @@
 	    <groupId>org.glassfish.jersey.media</groupId>
 	    <artifactId>jersey-media-json-jackson</artifactId>
 	    <version>2.25.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jersey.containers</groupId>
+      <artifactId>jersey-container-servlet-core</artifactId>
+      <version>2.25.1</version>
     </dependency>
 	<dependency>
 	    <groupId>com.fasterxml.jackson.jaxrs</groupId>
@@ -75,6 +100,17 @@
         </configuration>
       </plugin>
       <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>1.1</version>
+        <executions>
+          <execution><goals><goal>java</goal></goals></execution>
+        </executions>
+        <configuration>
+          <mainClass>edu.hm.JettyStarter</mainClass>
+        </configuration>
+      </plugin>
+      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
         <version>2.3</version>
@@ -82,7 +118,7 @@
           <execution>
             <phase>package</phase>
             <goals><goal>copy</goal></goals>
-            <configuration>
+            <!--<configuration>
               <artifactItems>
                 <artifactItem>
                   <groupId>org.eclipse.jetty</groupId>
@@ -91,7 +127,7 @@
                   <destFileName>jetty-runner.jar</destFileName>
                 </artifactItem>
               </artifactItems>
-            </configuration>
+            </configuration>-->
           </execution>
          </executions>
       </plugin>
