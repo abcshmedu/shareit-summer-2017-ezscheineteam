@@ -13,4 +13,6 @@ public interface MediaRepository {
     Book findBook(String isbn);
     Disc findDisc(String barcode);
     void createBook(Book b);
+    Book update(Book book);
+    Disc createDisc(Disc disc);
 }

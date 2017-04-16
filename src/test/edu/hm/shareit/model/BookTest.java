@@ -25,7 +25,7 @@ public class BookTest {
         ObjectMapper m = new ObjectMapper();
         Book b = m.readValue(jsonInput, Book.class);
         assertNotEquals(null, b);
-        assertEquals("Buch",b.getTitle());
+        assertEquals("Buch", b.getTitle());
         assertEquals("Author", b.getAuthor());
         assertEquals("1234", b.getIsbn());
     }
