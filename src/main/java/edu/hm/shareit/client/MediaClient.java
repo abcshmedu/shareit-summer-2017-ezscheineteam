@@ -20,18 +20,18 @@ public class MediaClient {
     private Client client;
 
     /**
-     *
+     * Creates a new client.
      */
     public MediaClient() {
         client = ClientBuilder.newClient();
     }
 
     /**
-     *
-     * @param isbn asd
-     * @return asd
+     * Requests a book with a specific isbn.
+     * @param isbn The isbn to look for.
+     * @return The book if found or else runtime exception.
      */
-    public Book getBooks(String isbn) {
+    public Book getBook(String isbn) {
         WebTarget target = client.target("http://localhost:8080/shareit/media/");
         Response response =  target.path("books/" + isbn).request().get(Response.class);
 
@@ -43,8 +43,8 @@ public class MediaClient {
     }
 
     /**
-     *
-     * @param isbn asd
+     * The client requests a disc with a specified barcode.
+     * @param barcode barcode to get list from.
      * @return asd
      */
     public Disc getDisc(String barcode) {
@@ -58,8 +58,8 @@ public class MediaClient {
         return response.readEntity(Disc.class);
     }
     /**
-     *
-     * @return asd
+     * The client requests all books.
+     * @return A list containing all books.
      */
     public List<Book> getBooks() {
         WebTarget target = client.target("http://localhost:8080/shareit/media/");
@@ -67,8 +67,8 @@ public class MediaClient {
     }
 
     /**
-     *
-     * @return
+     * Requests all discs.
+     * @return A list containing all discs.
      */
     public List<Disc> getDiscs() {
         WebTarget target = client.target("http://localhost:8080/shareit/media/");
@@ -76,11 +76,11 @@ public class MediaClient {
     }
 
     /**
-     *
-     * @param book asd
-     * @return asd
+     * Request the creation of a book in the repository of the server.
+     * @param book the book to be created
+     * @return The newly created book.
      */
-    public Book create(Book book) {
+    public Book createBook(Book book) {
         WebTarget target = client.target("http://localhost:8080/shareit/media/");
 
         Response response =  target.path("books/")
@@ -97,9 +97,9 @@ public class MediaClient {
     /**
      * Updates a book.
      * @param book book to be updated.
-     * @return the updated book
+     * @return the updated book.
      */
-    public Book update(Book book) {
+    public Book updateBook(Book book) {
         WebTarget target = client.target("http://localhost:8080/shareit/media/");
 
         Response response =  target.path("books/" + book.getIsbn())

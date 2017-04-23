@@ -8,6 +8,9 @@ import edu.hm.shareit.repository.MediaRepositoryStub;
 
 import java.util.List;
 
+/**
+ *
+ */
 public class MediaServiceImpl implements MediaService {
     private MediaRepository mediaRepository = new MediaRepositoryStub();
 

@@ -4,6 +4,9 @@ import edu.hm.shareit.model.Book;
 import edu.hm.shareit.model.Disc;
 import edu.hm.shareit.model.Medium;
 
+/**
+ *
+ */
 public interface MediaService {
     /**
      * Validates the book and adds it to the repository.

@@ -10,25 +10,25 @@ import static org.junit.Assert.*;
 
 public class MediaClientTest {
     @Test
-    public void testCreate() {
+    public void testCreateBook() {
         MediaClient client = new MediaClient();
         Book book = new Book();
-        book = client.create(book);
+        book = client.createBook(book);
         assertNotNull(book);
     }
 
     @Test
-    public void testPut() {
+    public void testPutBook() {
         MediaClient client = new MediaClient();
         Book book = new Book("New Book", "New Author", "12345");
-        book = client.update(book);
+        book = client.updateBook(book);
         assertNotNull(book);
     }
 
     @Test
     public void getBook() throws Exception {
         MediaClient client = new MediaClient();
-        Book book = client.getBooks("12345");
+        Book book = client.getBook("12345");
         assertNotNull(book);
     }
 
@@ -56,8 +56,14 @@ public class MediaClientTest {
     }
 
     @Test(expected = RuntimeException.class)
-    public void testGetWithBadRequest() {
+    public void testGetBookWithBadRequest() {
         MediaClient client = new MediaClient();
-        client.getBooks("123");
+        client.getBook("123");
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void testGetBookWithBookNotFound() {
+        MediaClient client = new MediaClient();
+        client.getBook("12345678987654321");
     }
 }
