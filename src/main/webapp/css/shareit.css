@@ -14,3 +14,24 @@ td {
 .error {
 		color:#ff0000;
 }
+
+.button {
+	border-radius: 100px!important;
+}
+
+.section {
+	padding: 10rem 0;
+}
+
+#content td {
+	padding-left: 10px;
+}
+
+.shareit-heading {
+	font-size: 2.6rem;
+}
+
+header {
+	margin: 0 auto;
+	width: 80%;
+}

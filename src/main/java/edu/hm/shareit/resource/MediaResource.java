@@ -30,6 +30,7 @@ public class MediaResource {
     @Path("books/{isbn}") // http:localhost:8080/shareit/media/books/{isbn}
     @Produces(MediaType.APPLICATION_JSON)
     public Response getBook(@PathParam("isbn") String isbn) {
+        System.out.println("Suche Buch mit ISBN: " + isbn);
         if (isbn == null || isbn.length() < 4) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
