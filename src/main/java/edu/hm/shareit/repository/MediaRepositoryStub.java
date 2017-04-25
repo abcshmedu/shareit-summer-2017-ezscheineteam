@@ -40,6 +40,7 @@ public class MediaRepositoryStub implements MediaRepository {
         // insert into book table
         // else
         // update the Book
+
         return book;
     }
 

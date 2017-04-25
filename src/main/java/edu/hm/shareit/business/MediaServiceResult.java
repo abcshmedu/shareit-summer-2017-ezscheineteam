@@ -1,12 +1,15 @@
 package edu.hm.shareit.business;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.ws.rs.core.Response;
 
 /**
  *
  */
+@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum MediaServiceResult {
-    OK(Response.Status.OK, ""),
+    OK(Response.Status.OK, "Tutto bene."),
     ERROR_ISBN_FORMAT(Response.Status.BAD_REQUEST, "Die ISBN wurde falsch angegeben oder formatiert."),
     ERROR_BARCODE_FORMAT(Response.Status.BAD_REQUEST, "Der Barcode wurde falsch angegeben oder formatiert."),
     ERROR_BOOK_NOT_FOUND(Response.Status.NOT_FOUND, "Ein Buch mit dieser ISBN existiert nicht."),
