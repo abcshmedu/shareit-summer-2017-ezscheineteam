@@ -55,7 +55,16 @@ public class MediaServiceImpl implements MediaService {
 
     @Override
     public MediaServiceResult updateBook(Book book) {
-        return null;
+        mediaRepository.update(book);
+
+        return MediaServiceResult.OK;
+    }
+
+    @Override
+    public MediaServiceResult updateDisc(Disc disc) {
+        //mediaRepository.update(disc);
+
+        return MediaServiceResult.OK;
     }
 
     @Override
@@ -66,10 +75,5 @@ public class MediaServiceImpl implements MediaService {
     @Override
     public Medium getDisc(String barcode) {
         return mediaRepository.findDisc(barcode);
-    }
-
-    @Override
-    public MediaServiceResult updateDisc(Disc disc) {
-        return null;
     }
 }

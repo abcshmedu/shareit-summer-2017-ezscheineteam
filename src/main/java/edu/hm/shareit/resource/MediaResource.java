@@ -1,4 +1,4 @@
-package edu.hm.shareit.resources;
+package edu.hm.shareit.resource;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -7,9 +7,8 @@ import edu.hm.shareit.business.MediaService;
 import edu.hm.shareit.business.MediaServiceImpl;
 import edu.hm.shareit.business.MediaServiceResult;
 import edu.hm.shareit.model.Book;
+import edu.hm.shareit.model.Disc;
 import edu.hm.shareit.model.Medium;
-import edu.hm.shareit.repository.MediaRepository;
-import edu.hm.shareit.repository.MediaRepositoryStub;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -20,7 +19,6 @@ import javax.ws.rs.core.Response;
  */
 @Path("media")
 public class MediaResource {
-    private MediaRepository mediaRepository = new MediaRepositoryStub();
     private MediaService mediaService = new MediaServiceImpl();
 
     /**
@@ -98,14 +96,22 @@ public class MediaResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response createBook(Book b) {
-        System.out.println(b.getTitle());
-        System.out.println(b.getAuthor());
-        System.out.println(b.getIsbn());
         MediaServiceResult result = mediaService.addBook(b);
-        if (result != MediaServiceResult.OK) {
-            return Response.status(result.getStatus()).entity(toJson(result)).build();
-        }
-        return Response.ok().build();
+        return Response.status(result.getStatus()).entity(toJson(result)).build();
+    }
+
+    /**
+     *
+     * @param d
+     * @return
+     */
+    @POST
+    @Path("discs")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response createDisc(Disc d) {
+        MediaServiceResult result = mediaService.addDisc(d);
+        return Response.status(result.getStatus()).entity(toJson(result)).build();
     }
 
     /**
@@ -117,12 +123,24 @@ public class MediaResource {
     @Path("books/{mediaId}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response update(Book book) {
-        System.out.println(book.getIsbn());
+    public Response updateBook(Book book) {
         mediaService.updateBook(book);
         return Response.ok().build();
     }
 
+    /**
+     *
+     * @param disc
+     * @return
+     */
+    @PUT
+    @Path("discs/{mediaId}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateDisc(Disc disc) {
+        mediaService.updateDisc(disc);
+        return Response.ok().build();
+    }
 
     /**
      * Creates Json from an object.
