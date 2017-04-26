@@ -1,37 +1,12 @@
-td {
-	padding: 0px;
-	border: 0px;
+#sidebar-wrapper {
+    z-index: 1000;
+    left: 220px;
+    width: 0;
+    height: 100%;
+    margin-left: -220px;
+    background: #1a1a1a;
 }
 
-.hidden {
-    visibility: hidden;
-}
-
-.visible {
-    visibility: visible;
-}
-
-.error {
-		color:#ff0000;
-}
-
-.button {
-	border-radius: 100px!important;
-}
-
-.section {
-	padding: 10rem 0;
-}
-
-#content td {
-	padding-left: 10px;
-}
-
-.shareit-heading {
-	font-size: 2.6rem;
-}
-
-header {
-	margin: 0 auto;
-	width: 80%;
+body {
+    font-family:"Raleway";
 }
