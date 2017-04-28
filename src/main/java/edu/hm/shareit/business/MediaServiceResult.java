@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import javax.ws.rs.core.Response;
 
 /**
- *
+ * A class for describing the results/errors of the MediaService operations.
  */
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum MediaServiceResult {
@@ -20,8 +20,9 @@ public enum MediaServiceResult {
     private String detail;
 
     /**
-     *
-     * @param status
+     * Creates an object containing the results of a MediaService operation.
+     * @param status contains the http status code of the operation.
+     * @param detail contains more details about the operation.
      */
     MediaServiceResult(Response.Status status, String detail) {
         this.status = status;
@@ -37,16 +38,16 @@ public enum MediaServiceResult {
     }
 
     /**
-     *
-     * @return
+     * More details about the result/errors occurred during execution.
+     * @return A string containing more information about the operations results.
      */
     public String getDetail() {
         return detail;
     }
 
     /**
-     *
-     * @return
+     * The HTTP-status code of the operation.
+     * @return HTTP-status code of the operation
      */
     public Response.Status getStatus() {
         return status;
