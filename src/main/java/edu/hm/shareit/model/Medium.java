@@ -10,6 +10,9 @@ public class Medium {
     private String title;
 
     public Medium(String title) {
+        if (title == null) {
+            throw new IllegalArgumentException("Title for medium cannot be null!");
+        }
         this.title = title;
     }
 
@@ -19,8 +22,10 @@ public class Medium {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
         Medium medium = (Medium) o;
 
@@ -34,8 +39,6 @@ public class Medium {
 
     @Override
     public String toString() {
-        return "Medium{" +
-                "title='" + title + '\'' +
-                '}';
+        return "Medium{" + "title='" + title + '\'' + '}';
     }
 }
