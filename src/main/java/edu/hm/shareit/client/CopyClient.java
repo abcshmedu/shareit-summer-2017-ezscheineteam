@@ -175,7 +175,7 @@ public class CopyClient {
      * @return Ein Response Objekt des Servers.
      */
     public Response deleteDisc(String user, String barcode) {
-        return target.path(DISCS_URI)
+        return target.path(DISC_URI)
                 .resolveTemplate(USER_TEMPLATE, user)
                 .resolveTemplate(BARCODE_TEMPLATE, barcode)
                 .request().delete();
