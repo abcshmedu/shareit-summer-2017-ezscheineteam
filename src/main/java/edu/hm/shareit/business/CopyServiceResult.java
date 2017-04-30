@@ -1,13 +1,31 @@
 package edu.hm.shareit.business;
 
-import javax.ws.rs.core.Response.Status;
+public class CopyServiceResult {
 
-public enum CopyServiceResult {
-    ;
+    private final CopyServiceStatus status;
 
-    public Status getStatus() {
-        // TODO Auto-generated method stub
-        return null;
+    private final Object result;
+
+    public CopyServiceResult(CopyServiceStatus status) {
+        this.status = status;
+        this.result = null;
+    }
+
+    public CopyServiceResult(CopyServiceStatus status, Object result) {
+        this.status = status;
+        this.result = result;
+    }
+
+    public boolean containsResult() {
+        return result != null;
+    }
+
+    public CopyServiceStatus getStatus() {
+        return status;
+    }
+    
+    public Object getResult() {
+        return result;
     }
 
 }

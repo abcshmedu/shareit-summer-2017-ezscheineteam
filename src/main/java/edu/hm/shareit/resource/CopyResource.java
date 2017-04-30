@@ -9,73 +9,88 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-
 import edu.hm.shareit.business.CopyService;
 import edu.hm.shareit.business.CopyServiceImplStub;
 import edu.hm.shareit.business.CopyServiceResult;
+import edu.hm.shareit.business.CopyServiceStatus;
 import edu.hm.shareit.model.Book;
+import edu.hm.shareit.model.Copy;
 import edu.hm.shareit.model.Disc;
-import edu.hm.shareit.model.Medium;
 
+/**
+ * REST-Endpoint für das Anlegen von Exemplaren.
+ */
 @Path("copy")
 public class CopyResource {
-    private CopyService copyService = new CopyServiceImplStub();
-    
 
-   @POST
-   @Path("{user}/books")
-   @Consumes(MediaType.APPLICATION_JSON)
-   public Response createBook(Book b, @PathParam("user")String user) {
-       CopyServiceResult result = copyService.addBook(b, user);
-       return Response.status(result.getStatus()).entity(toJson(result)).build();
-   }
-   
-   
-   @POST
-   @Path("{user}/discs")
-   @Consumes(MediaType.APPLICATION_JSON)
-   public Response createDisc(Disc d, @PathParam("user")String user) {
-       CopyServiceResult result = copyService.addDisc(d, user);
-       return Response.status(result.getStatus()).entity(toJson(result)).build();
-   }
-   
-  @GET
-  @Path("{user}/books")
-  @Produces(MediaType.APPLICATION_JSON)
-  public Response getBooks(@PathParam("user")String user) {
-      Medium[] medias = copyService.getBooks(user);
-      return Response.ok()
-              .entity(toJson(medias))
-              .build();
-  }
+    /**
+     * Service zur Handhabung von Exemplaren.
+     */
+    private final CopyService copyService = new CopyServiceImplStub();
 
-  @GET
-  @Path("{user}/discs")
-  @Produces(MediaType.APPLICATION_JSON)
-  public Response getDiscs(@PathParam("user")String user) {
-      Medium[] medias = copyService.getDiscs(user);
-      return Response.ok()
-              .entity(toJson(medias))
-              .build();
-  }
-  
-  /**
-   * Creates Json from an object.
-   * @param obj the object.
-   * @return Json-String
-   */
-  private String toJson(Object obj) {
-      ObjectMapper mapper = new ObjectMapper();
-      mapper.enable(SerializationFeature.INDENT_OUTPUT);
-      try {
-          return mapper.writeValueAsString(obj);
-      } catch (JsonProcessingException e) {
-          e.printStackTrace();
-      }
-      return "";
-  }
-  
+    /**
+     * Legt ein neues Exemplar Buch an.
+     * @param book Das Exemplar Buch
+     * @param user Das Konto welchem das Exemplar angelegt werden soll.
+     * @return Response Objekt
+     */
+    @POST
+    @Path("{user}/books")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response createBook(Book book, @PathParam("user")String user) {
+        Copy copy = new Copy(user, book);
+        CopyServiceStatus result = copyService.addBook(copy);
+        return Response.status(result.getStatus()).entity(result).build();
+    }
+
+    /**
+     * Legt ein neues Exemplar Disc an.
+     * @param disc Das Exemplar Disc
+     * @param user Das Konto welchem das Exemplar angelegt werden soll.
+     * @return Response Objekt 
+     */
+    @POST
+    @Path("{user}/discs")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response createDisc(Disc disc, @PathParam("user")String user) {
+        Copy copy = new Copy(user, disc);
+        CopyServiceStatus result = copyService.addDisc(copy);
+        return Response.status(result.getStatus()).entity(result).build();
+    }
+
+    /**
+     * Liefert alle Exemplare Buch die dem Konto angelegt wurden.
+     * @param user Der Benutzername des Kontos.
+     * @return response Objekt
+     */
+    @GET
+    @Path("{user}/books")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getBooks(@PathParam("user")String user) {
+        CopyServiceResult result = copyService.getBooks(user);
+        CopyServiceStatus status = result.getStatus();
+        return Response.status(status.getStatus())
+                .entity(result.containsResult() ? result.getResult() : status)
+                .build();
+    }
+
+    /**
+     * Liefert alle Exemplare Disc die dem Konto angelegt wurden.
+     * @param user Der Benutzername des Kontos.
+     * @return response Objekt
+     */
+    @GET
+    @Path("{user}/discs")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getDiscs(@PathParam("user")String user) {
+        CopyServiceResult result = copyService.getDiscs(user);
+        CopyServiceStatus status = result.getStatus();
+        return Response.status(status.getStatus())
+                .entity(result.containsResult() ? result.getResult() : status)
+                .build();
+    }
+
+
 }

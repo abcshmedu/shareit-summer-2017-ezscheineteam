@@ -1,33 +1,34 @@
 package edu.hm.shareit.business;
 
-import edu.hm.shareit.model.Book;
-import edu.hm.shareit.model.Disc;
-import edu.hm.shareit.model.Medium;
+import edu.hm.shareit.model.Copy;
 
-public class CopyServiceImplStub implements CopyService{
-
+/**
+ * Stub für den Service: Anlegen von Exemplaren.
+ */
+public class CopyServiceImplStub implements CopyService {
+    
     @Override
-    public CopyServiceResult addBook(Book book, String user) {
+    public CopyServiceStatus addBook(Copy copy) {
         // TODO Auto-generated method stub
-        return null;
+        return CopyServiceStatus.ERROR_NOT_IMPLEMENTED;
     }
 
     @Override
-    public CopyServiceResult addDisc(Disc disc, String user) {
+    public CopyServiceStatus addDisc(Copy copy) {
         // TODO Auto-generated method stub
-        return null;
+        return CopyServiceStatus.ERROR_NOT_IMPLEMENTED;
     }
 
     @Override
-    public Medium[] getBooks(String user) {
+    public CopyServiceResult getBooks(String user) {
         // TODO Auto-generated method stub
-        return null;
+        return new CopyServiceResult(CopyServiceStatus.ERROR_NOT_IMPLEMENTED);
     }
 
     @Override
-    public Medium[] getDiscs(String user) {
+    public CopyServiceResult getDiscs(String user) {
         // TODO Auto-generated method stub
-        return null;
+        return new CopyServiceResult(CopyServiceStatus.ERROR_NOT_IMPLEMENTED);
     }
 
 }

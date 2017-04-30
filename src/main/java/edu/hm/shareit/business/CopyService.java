@@ -1,19 +1,20 @@
 package edu.hm.shareit.business;
 
-import edu.hm.shareit.model.Book;
-import edu.hm.shareit.model.Disc;
-import edu.hm.shareit.model.Medium;
+import edu.hm.shareit.model.Copy;
 
+/**
+ * Interface für den Service: Anlegen von Exemplaren.
+ */
 public interface CopyService {
   
-    CopyServiceResult addBook(Book book, String user);
+    CopyServiceStatus addBook(Copy copy);
+
     
-  
-    CopyServiceResult addDisc(Disc disc, String user);
+    CopyServiceStatus addDisc(Copy copy);
 
-  
-    Medium[] getBooks(String user);
 
- 
-    Medium[] getDiscs(String user);
+    CopyServiceResult getBooks(String user);
+
+
+    CopyServiceResult getDiscs(String user);
 }
