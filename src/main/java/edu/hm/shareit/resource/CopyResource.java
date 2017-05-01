@@ -11,14 +11,14 @@ import javax.ws.rs.core.Response;
 
 import edu.hm.shareit.business.CopyService;
 import edu.hm.shareit.business.CopyServiceImplStub;
-import edu.hm.shareit.business.CopyServiceResult;
-import edu.hm.shareit.business.CopyServiceStatus;
+import edu.hm.shareit.business.ServiceResult;
+import edu.hm.shareit.business.ServiceStatus;
 import edu.hm.shareit.model.Book;
 import edu.hm.shareit.model.Copy;
 import edu.hm.shareit.model.Disc;
 
 /**
- * REST-Endpoint für das Anlegen von Exemplaren.
+ * REST-Endpoint fï¿½r das Anlegen von Exemplaren.
  */
 @Path("copy")
 public class CopyResource {
@@ -40,7 +40,7 @@ public class CopyResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response createBook(Book book, @PathParam("user")String user) {
         Copy copy = new Copy(user, book);
-        CopyServiceStatus result = copyService.addBook(copy);
+        ServiceStatus result = copyService.addBook(copy);
         return Response.status(result.getStatus()).entity(result).build();
     }
 
@@ -56,7 +56,7 @@ public class CopyResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response createDisc(Disc disc, @PathParam("user")String user) {
         Copy copy = new Copy(user, disc);
-        CopyServiceStatus result = copyService.addDisc(copy);
+        ServiceStatus result = copyService.addDisc(copy);
         return Response.status(result.getStatus()).entity(result).build();
     }
 
@@ -69,8 +69,8 @@ public class CopyResource {
     @Path("{user}/books")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getBooks(@PathParam("user")String user) {
-        CopyServiceResult result = copyService.getBooks(user);
-        CopyServiceStatus status = result.getStatus();
+        ServiceResult result = copyService.getBooks(user);
+        ServiceStatus status = result.getStatus();
         return Response.status(status.getStatus())
                 .entity(result.containsResult() ? result.getResult() : status)
                 .build();
@@ -85,8 +85,8 @@ public class CopyResource {
     @Path("{user}/discs")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getDiscs(@PathParam("user")String user) {
-        CopyServiceResult result = copyService.getDiscs(user);
-        CopyServiceStatus status = result.getStatus();
+        ServiceResult result = copyService.getDiscs(user);
+        ServiceStatus status = result.getStatus();
         return Response.status(status.getStatus())
                 .entity(result.containsResult() ? result.getResult() : status)
                 .build();

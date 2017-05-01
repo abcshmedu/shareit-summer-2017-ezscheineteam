@@ -1,6 +1,7 @@
 package edu.hm.shareit.client;
 
-import edu.hm.shareit.business.MediaServiceResult;
+import edu.hm.shareit.business.ServiceResult;
+import edu.hm.shareit.business.ServiceStatus;
 import edu.hm.shareit.model.Book;
 import edu.hm.shareit.model.Disc;
 
@@ -35,7 +36,7 @@ public class MediaClient {
         WebTarget target = client.target("http://localhost:8080/shareit/media/");
         Response response =  target.path("books/" + isbn).request().get(Response.class);
 
-        if (response.getStatus() != MediaServiceResult.OK.getCode()) {
+        if (response.getStatus() != ServiceStatus.OK.getStatus()) {
             throw new RuntimeException(response.getStatus() + ": there was an error on the server.");
         }
 
@@ -51,7 +52,7 @@ public class MediaClient {
         WebTarget target = client.target("http://localhost:8080/shareit/media/");
         Response response =  target.path("discs/" + barcode).request().get(Response.class);
 
-        if (response.getStatus() != MediaServiceResult.OK.getCode()) {
+        if (response.getStatus() != ServiceStatus.OK.getStatus()) {
             throw new RuntimeException(response.getStatus() + ": there was an error on the server.");
         }
 
@@ -80,18 +81,18 @@ public class MediaClient {
      * @param book the book to be created
      * @return The newly created book.
      */
-    public Book createBook(Book book) {
+    public ServiceStatus createBook(Book book) {
         WebTarget target = client.target("http://localhost:8080/shareit/media/");
 
         Response response =  target.path("books/")
                 .request(MediaType.APPLICATION_JSON)
                 .post(Entity.entity(book, MediaType.APPLICATION_JSON));
 
-        if (response.getStatus() != MediaServiceResult.OK.getCode()) {
+        if (response.getStatus() != ServiceStatus.OK.getStatus()) {
             throw new RuntimeException(response.getStatus() + ": there was an error on the server.");
         }
 
-        return response.readEntity(Book.class);
+        return response.readEntity(ServiceStatus.class);
     }
 
     /**
@@ -99,17 +100,13 @@ public class MediaClient {
      * @param book book to be updated.
      * @return the updated book.
      */
-    public Book updateBook(Book book) {
+    public ServiceStatus updateBook(Book book) {
         WebTarget target = client.target("http://localhost:8080/shareit/media/");
 
         Response response =  target.path("books/" + book.getIsbn())
                 .request(MediaType.APPLICATION_JSON)
                 .put(Entity.entity(book, MediaType.APPLICATION_JSON));
 
-        if (response.getStatus() != MediaServiceResult.OK.getCode()) {
-            throw new RuntimeException(response.getStatus() + ": there was an error on the server.");
-        }
-
-        return response.readEntity(Book.class);
+        return response.readEntity(ServiceStatus.class);
     }
 }

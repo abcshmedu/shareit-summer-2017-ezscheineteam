@@ -3,18 +3,18 @@ package edu.hm.shareit.business;
 import edu.hm.shareit.model.Copy;
 
 /**
- * Interface für den Service: Anlegen von Exemplaren.
+ * Interface fï¿½r den Service: Anlegen von Exemplaren.
  */
 public interface CopyService {
   
-    CopyServiceStatus addBook(Copy copy);
+    ServiceStatus addBook(Copy copy);
 
     
-    CopyServiceStatus addDisc(Copy copy);
+    ServiceStatus addDisc(Copy copy);
 
 
-    CopyServiceResult getBooks(String user);
+    ServiceResult getBooks(String user);
 
 
-    CopyServiceResult getDiscs(String user);
+    ServiceResult getDiscs(String user);
 }

@@ -1,34 +1,36 @@
-package edu.hm.shareit.client;
+package java.edu.hm.shareit.client;
 
+import edu.hm.shareit.business.ServiceStatus;
+import edu.hm.shareit.client.MediaClient;
 import edu.hm.shareit.model.Book;
 import edu.hm.shareit.model.Disc;
 import org.junit.Test;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
 
 public class MediaClientTest {
     @Test
     public void testCreateBook() {
         MediaClient client = new MediaClient();
-        Book book = new Book();
-        book = client.createBook(book);
-        assertNotNull(book);
+        Book book = new Book("TestBook", "AutoTestBook", "1234567891");
+        ServiceStatus s = client.createBook(book);
+        assertNotNull(s);
     }
 
     @Test
     public void testPutBook() {
         MediaClient client = new MediaClient();
-        Book book = new Book("New Book", "New Author", "12345");
-        book = client.updateBook(book);
-        assertNotNull(book);
+        Book book = new Book("New Book", "New Author", "1234567890");
+        ServiceStatus s = client.updateBook(book);
+        assertNotNull(s);
     }
 
     @Test
     public void getBook() throws Exception {
         MediaClient client = new MediaClient();
-        Book book = client.getBook("12345");
+        Book book = client.getBook("1234567890");
         assertNotNull(book);
     }
 

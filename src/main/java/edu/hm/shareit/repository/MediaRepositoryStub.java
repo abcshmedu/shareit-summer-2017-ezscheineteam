@@ -11,15 +11,16 @@ import java.util.Optional;
  * Just a mock class, as long as we don't have a real repository.
  */
 public class MediaRepositoryStub implements MediaRepository {
-    private List<Book> allBooks = new ArrayList<>();
-    private List<Disc> allDiscs = new ArrayList<>();
+    private static List<Book> allBooks = new ArrayList<>();
+    private static List<Disc> allDiscs = new ArrayList<>();
 
     /**
      * Creates our example repository.
      */
-    public MediaRepositoryStub() {
+    static {
         allBooks.add(new Book("Die Eule mit der Beule", "Susanne Weber", "978-3789167065"));
-        allBooks.add(new Book("Das Buch", "DerAutor", "12345"));
+        allBooks.add(new Book("Das Buch", "DerAutor", "1234567890"));
+        allBooks.add(new Book("Design Patterns. Elements of Reusable Object Oriented Software.", "Gang of four", "978-0201633610"));
         allDiscs.add(new Disc("Never Gonna Give You Up", "123-124132", 0, "Rick Astley"));
         allDiscs.add(new Disc("Die CD", "123-123", 0, "Der Künstler"));
     }
@@ -33,15 +34,30 @@ public class MediaRepositoryStub implements MediaRepository {
     }
 
     @Override
-    public Book update(Book book) {
+    public void updateDisc(Disc disc) {
+        String barcode = disc.getBarcode();
+        allDiscs.stream().filter(d -> d.getBarcode().equals(barcode)).findFirst().orElse(null);
+    }
+
+    @Override
+    public boolean updateBook(Book book, String isbn) {
         // search the database to see if we have a book with that isbn already
         // select * from Books where isbn = ?
         // if rs size == 0
         // insert into book table
         // else
         // update the Book
-
-        return book;
+        int index = -1;
+        for (Book b : allBooks) {
+            if (b.getIsbn().equals(isbn)) {
+                index = allBooks.indexOf(b);
+                break;
+            }
+        }
+        if (index == -1)
+            return false;
+        allBooks.set(index, book);
+        return true;
     }
 
     @Override
@@ -69,7 +85,7 @@ public class MediaRepositoryStub implements MediaRepository {
     }
 
     @Override
-    public Disc createDisc(Disc disc) {
-        return null;
+    public void createDisc(Disc disc) {
+        allDiscs.add(disc);
     }
 }

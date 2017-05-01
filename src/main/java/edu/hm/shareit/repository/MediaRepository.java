@@ -42,16 +42,25 @@ public interface MediaRepository {
     void createBook(Book b);
 
     /**
-     * Updates an existing book in the repository.
-     * @param book - book with updated information.
-     * @return the updated book.
-     */
-    Book update(Book book);
-
-    /**
      * Creates a disc in the repository.
      * @param disc - the new disc.
      * @return the created Disc.
      */
-    Disc createDisc(Disc disc);
+    void createDisc(Disc disc);
+
+    /**
+     * Updates an existing book in the repository.
+     * @param book - book with updated information.
+     * @return the updated book.
+     */
+    boolean updateBook(Book book, String isbn);
+
+
+    /**
+     * Updates an existing book in the repository.
+     * @param disc - book with updated information.
+     * @return the updated book.
+     */
+    void updateDisc(Disc disc);
+
 }
