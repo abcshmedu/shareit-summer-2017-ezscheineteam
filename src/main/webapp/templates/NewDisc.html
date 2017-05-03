@@ -1,0 +1,42 @@
+<h2>Neue Disc erstellen</h2>
+<form name="newBookForm" class="form-horizontal">
+    <div class="form-group">
+        <label for="discTitle" class="col-sm-2 control-label">Title:</label>
+        <div class="col-sm-10">
+            <input id="discTitle" ng-model="disc.title" class="form-control" type="text"
+                   placeholder="Title of the disc..."/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="discDirector" class="col-sm-2 control-label">Director:</label>
+        <div class="col-sm-4">
+            <input id="discDirector" ng-model="disc.director" class="form-control" type="text"
+                   placeholder="Director of the disc..."/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="discBarcode" class="col-sm-2 control-label">Barcode:</label>
+        <div class="col-sm-4">
+            <input id="discBarcode" ng-model="disc.barcode" class="form-control" type="text"
+                   placeholder="Barcode of the disc..."/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="discFsk" class="col-sm-2 control-label">FSK:</label>
+        <div class="col-sm-2">
+            <select id="discFsk" ng-model="disc.fsk" class="form-control">
+                <option>0</option>
+                <option>6</option>
+                <option>12</option>
+                <option>16</option>
+                <option>18</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button ng-click="saveDisc(book)" type="submit" class="btn btn-primary">Save</button>
+            <button type="button" class="btn btn-default">Cancel</button>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,31 @@
+<div class="row"><h2>Alle Media</h2></div>
+<div class="row">
+    <h2>
+        B&uuml;cher
+        <span class="label label-info">
+            {{books.length}}
+        </span>
+    </h2>
+    <div class="col-sm-12" ng-repeat="book in books">
+        <div class="col-sm-12"><h3>{{book.title}}</h3></div>
+        <div class="col-sm-1">Author:</div>
+        <div class="col-sm-11">{{book.author}}</div>
+        <div class="col-sm-1">ISBN:</div>
+        <div class="col-sm-11">{{book.isbn}}</div>
+    </div>
+</div>
+<div class="row">
+    <h2>
+        Discs
+        <span class="label label-info">
+            {{discs.length}}
+        </span>
+    </h2>
+    <div class="col-sm-12" ng-repeat="disc in discs">
+        <div class="col-sm-12"><h3>{{disc.title}}</h3></div>
+        <div class="col-sm-1">Director:</div>
+        <div class="col-sm-11">{{disc.director}}</div>
+        <div class="col-sm-1">Barcode:</div>
+        <div class="col-sm-11">{{disc.barcode}}</div>
+    </div>
+</div>

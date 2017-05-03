@@ -1,7 +1,7 @@
 # 2. Pratkikumsaufgabe Software-Architektur Sommer 2017
 Heroku Deployment:
 -
-Link: [ShareIt](https://sleepy-peak-70358.herokuapp.com/)
+Link: [ShareIt](https://arcane-wave-21354.herokuapp.com/)
 
 REST-API Interface Dokumentation:
 -

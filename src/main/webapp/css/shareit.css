@@ -10,3 +10,24 @@
 body {
     font-family:"Raleway";
 }
+
+input.ng-invalid.ng-dirty {
+    border-color: #a94442!important;
+}
+
+.sidebar {
+    padding-top: 100px;
+    padding: 20px;
+    position: fixed;
+    top:51px;
+    left: 0;
+}
+
+.sidebar .nav-item {
+    width: 100%;
+}
+
+.navbar-brand {
+    font-size: 1.5em;
+    color: #fff!important;
+}
