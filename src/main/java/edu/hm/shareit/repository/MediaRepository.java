@@ -38,29 +38,32 @@ public interface MediaRepository {
     /**
      * Creates a new book in the repository.
      * @param b - the new book.
+     * @return true, if book could be created, false otherwise.
      */
-    void createBook(Book b);
+    boolean createBook(Book b);
 
     /**
      * Creates a disc in the repository.
      * @param disc - the new disc.
-     * @return the created Disc.
+     * @return true, if disc could be created, false otherwise.
      */
-    void createDisc(Disc disc);
+    boolean createDisc(Disc disc);
 
     /**
      * Updates an existing book in the repository.
      * @param book - book with updated information.
-     * @return the updated book.
+     * @param isbn - the isbn of an existing book.
+     * @return true, if update successful, false otherwise.
      */
     boolean updateBook(Book book, String isbn);
 
 
     /**
-     * Updates an existing book in the repository.
-     * @param disc - book with updated information.
-     * @return the updated book.
+     * Updates an existing disc in the repository.
+     * @param disc - disc with updated information.
+     * @param barcode - the barcode of an existing disc in the repo.
+     * @return true, if update successful, false otherwise.
      */
-    void updateDisc(Disc disc);
+    boolean updateDisc(Disc disc, String barcode);
 
 }

@@ -18,7 +18,7 @@ import edu.hm.shareit.model.Copy;
 import edu.hm.shareit.model.Disc;
 
 /**
- * REST-Endpoint f�r das Anlegen von Exemplaren.
+ * REST-Endpoint für das Anlegen von Exemplaren.
  */
 @Path("copy")
 public class CopyResource {

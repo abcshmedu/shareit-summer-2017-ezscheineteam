@@ -2,10 +2,9 @@ package edu.hm.shareit.business;
 
 import edu.hm.shareit.model.Book;
 import edu.hm.shareit.model.Disc;
-import edu.hm.shareit.model.Medium;
 
 /**
- *
+ * Interface for creating, updating and retrieving Medias.
  */
 public interface MediaService {
     /**
@@ -49,15 +48,17 @@ public interface MediaService {
 
     /**
      * Looks up the book in the repository and updates it.
-     * @param book the book to be updated.
+     * @param book the book with updated values.
+     * @param isbn the isbn of an existing book in the repo.
      * @return the result of the operation.
      */
     ServiceStatus updateBook(Book book, String isbn);
 
     /**
      * Looks up the disc in the repository and updates it.
-     * @param disc the disc to be updated.
+     * @param disc the disc with updated values.
+     * @param barcode the barcode of an existing disc in the repo.
      * @return the result of the operation.
      */
-    ServiceStatus updateDisc(Disc disc);
+    ServiceStatus updateDisc(Disc disc, String barcode);
 }

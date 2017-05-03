@@ -1,7 +1,5 @@
 package edu.hm.shareit.client;
 
-import edu.hm.shareit.business.ServiceResult;
-import edu.hm.shareit.business.ServiceStatus;
 import edu.hm.shareit.model.Book;
 import edu.hm.shareit.model.Disc;
 
@@ -9,22 +7,25 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.List;
 
 /**
  * A Client to test our server implementation.
  */
 public class MediaClient {
-    private Client client;
+    private WebTarget target;
+
+    private static final String MAIN_URI = "http://localhost:8080/shareit/media/";
+    private static final String PATH_BOOKS = "books/";
+    private static final String PATH_DISCS = "discs/";
 
     /**
      * Creates a new client.
      */
-    public MediaClient() {
-        client = ClientBuilder.newClient();
+    MediaClient() {
+        Client client = ClientBuilder.newClient();
+        target = client.target(MAIN_URI);
     }
 
     /**
@@ -32,15 +33,8 @@ public class MediaClient {
      * @param isbn The isbn to look for.
      * @return The book if found or else runtime exception.
      */
-    public Book getBook(String isbn) {
-        WebTarget target = client.target("http://localhost:8080/shareit/media/");
-        Response response =  target.path("books/" + isbn).request().get(Response.class);
-
-        if (response.getStatus() != ServiceStatus.OK.getStatus()) {
-            throw new RuntimeException(response.getStatus() + ": there was an error on the server.");
-        }
-
-        return response.readEntity(Book.class);
+    Response getBook(String isbn) {
+        return target.path(PATH_BOOKS + isbn).request().get(Response.class);
     }
 
     /**
@@ -48,32 +42,23 @@ public class MediaClient {
      * @param barcode barcode to get list from.
      * @return asd
      */
-    public Disc getDisc(String barcode) {
-        WebTarget target = client.target("http://localhost:8080/shareit/media/");
-        Response response =  target.path("discs/" + barcode).request().get(Response.class);
-
-        if (response.getStatus() != ServiceStatus.OK.getStatus()) {
-            throw new RuntimeException(response.getStatus() + ": there was an error on the server.");
-        }
-
-        return response.readEntity(Disc.class);
+    Response getDisc(String barcode) {
+        return target.path(PATH_DISCS + barcode).request().get(Response.class);
     }
     /**
      * The client requests all books.
      * @return A list containing all books.
      */
-    public List<Book> getBooks() {
-        WebTarget target = client.target("http://localhost:8080/shareit/media/");
-        return target.path("books").request(MediaType.APPLICATION_JSON).get(new GenericType<List<Book>>() { });
+    public Response getBooks() {
+        return target.path(PATH_BOOKS).request(MediaType.APPLICATION_JSON).get(Response.class);
     }
 
     /**
      * Requests all discs.
      * @return A list containing all discs.
      */
-    public List<Disc> getDiscs() {
-        WebTarget target = client.target("http://localhost:8080/shareit/media/");
-        return target.path("discs").request(MediaType.APPLICATION_JSON).get(new GenericType<List<Disc>>() { });
+    public Response getDiscs() {
+        return target.path(PATH_DISCS).request(MediaType.APPLICATION_JSON).get(Response.class);
     }
 
     /**
@@ -81,32 +66,42 @@ public class MediaClient {
      * @param book the book to be created
      * @return The newly created book.
      */
-    public ServiceStatus createBook(Book book) {
-        WebTarget target = client.target("http://localhost:8080/shareit/media/");
-
-        Response response =  target.path("books/")
+    Response createBook(Book book) {
+        return target.path(PATH_BOOKS)
                 .request(MediaType.APPLICATION_JSON)
                 .post(Entity.entity(book, MediaType.APPLICATION_JSON));
-
-        if (response.getStatus() != ServiceStatus.OK.getStatus()) {
-            throw new RuntimeException(response.getStatus() + ": there was an error on the server.");
-        }
-
-        return response.readEntity(ServiceStatus.class);
     }
 
     /**
-     * Updates a book.
+     * Request a book to be updated.
      * @param book book to be updated.
-     * @return the updated book.
+     * @return the response to the request.
      */
-    public ServiceStatus updateBook(Book book) {
-        WebTarget target = client.target("http://localhost:8080/shareit/media/");
-
-        Response response =  target.path("books/" + book.getIsbn())
+    public Response updateBook(Book book) {
+        return target.path(PATH_BOOKS + book.getIsbn())
                 .request(MediaType.APPLICATION_JSON)
                 .put(Entity.entity(book, MediaType.APPLICATION_JSON));
+    }
 
-        return response.readEntity(ServiceStatus.class);
+    /**
+     * Request a disc to be updated.
+     * @param disc disc to be updated.
+     * @return the response to the request.
+     */
+    public Response updateDisc(Disc disc) {
+        return target.path(PATH_DISCS + disc.getBarcode())
+                .request(MediaType.APPLICATION_JSON)
+                .put(Entity.entity(disc, MediaType.APPLICATION_JSON));
+    }
+
+    /**
+     * Request the creation of a new disc on the server.
+     * @param disc - the disc to be created (needs a valid Barcode).
+     * @return the response to the request.
+     */
+    public Response createDisc(Disc disc) {
+        return target.path(PATH_DISCS)
+                .request(MediaType.APPLICATION_JSON)
+                .post(Entity.entity(disc, MediaType.APPLICATION_JSON));
     }
 }

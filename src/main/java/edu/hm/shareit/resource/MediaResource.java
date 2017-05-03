@@ -1,20 +1,15 @@
 package edu.hm.shareit.resource;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import edu.hm.shareit.business.MediaService;
 import edu.hm.shareit.business.MediaServiceImpl;
 import edu.hm.shareit.business.ServiceResult;
 import edu.hm.shareit.business.ServiceStatus;
 import edu.hm.shareit.model.Book;
 import edu.hm.shareit.model.Disc;
-import edu.hm.shareit.model.Medium;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.xml.ws.Service;
 
 /**
  *
@@ -32,16 +27,19 @@ public class MediaResource {
     @Path("books/{isbn}") // http:localhost:8080/shareit/media/books/{isbn}
     @Produces(MediaType.APPLICATION_JSON)
     public Response getBook(@PathParam("isbn") String isbn) {
-        System.out.println("Suche Buch mit ISBN: " + isbn);
         ServiceResult r = mediaService.getBook(isbn);
         ServiceStatus s = r.getStatus();
 
-        return Response.status(s.getStatus()).entity(toJson(r.getResult())).build();
+        if (s != ServiceStatus.OK) {
+            return Response.status(s.getStatus()).entity(s).build();
+        }
+
+        return Response.ok().entity(r.getResult()).build();
     }
 
     /**
-     *
-     * @return Response
+     * Returns all books.
+     * @return Response to the request.
      */
     @GET
     @Path("books")
@@ -49,13 +47,13 @@ public class MediaResource {
     public Response getBooks() {
         ServiceResult r = mediaService.getBooks();
         return Response.ok()
-                .entity(toJson(r.getResult()))
+                .entity(r.getResult())
                 .build();
     }
 
     /**
-     *
-     * @return Response
+     * Returns all discs.
+     * @return Response to the request.
      */
     @GET
     @Path("discs")
@@ -63,7 +61,7 @@ public class MediaResource {
     public Response getDiscs() {
         ServiceResult r = mediaService.getDiscs();
         return Response.ok()
-                .entity(toJson(r.getResult()))
+                .entity(r.getResult())
                 .build();
     }
 
@@ -79,14 +77,14 @@ public class MediaResource {
         ServiceResult r = mediaService.getDisc(barcode);
         ServiceStatus s = r.getStatus();
         return Response.status(s.getStatus())
-                .entity(toJson(r.getResult()))
+                .entity(r.getResult())
                 .build();
     }
 
     /**
-     *
-     * @param b
-     * @return
+     * Creates a new book.
+     * @param b The new book to be created.
+     * @return the response the the request.
      */
     @POST
     @Path("books")
@@ -94,13 +92,13 @@ public class MediaResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response createBook(Book b) {
         ServiceStatus result = mediaService.addBook(b);
-        return Response.status(result.getStatus()).entity(toJson(result)).build();
+        return Response.status(result.getStatus()).entity(result).build();
     }
 
     /**
-     *
-     * @param d
-     * @return
+     * Creates a new disc.
+     * @param d the disc to be created.
+     * @return The response to the request.
      */
     @POST
     @Path("discs")
@@ -108,52 +106,36 @@ public class MediaResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response createDisc(Disc d) {
         ServiceStatus result = mediaService.addDisc(d);
-        return Response.status(result.getStatus()).entity(toJson(result)).build();
+        return Response.status(result.getStatus()).entity(result).build();
     }
 
     /**
-     *
-     * @param book
-     * @return
+     * Updates an existing book with an other book.
+     * @param book the book with updated values.
+     * @param isbn the isbn of the book to be updated.
+     * @return the response to the request.
      */
     @PUT
     @Path("books/{isbn}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateBook(Book book, @PathParam("isbn") String isbn) {
-        System.out.println(book.getIsbn());
-        System.out.println(isbn);
         ServiceStatus s = mediaService.updateBook(book, isbn);
-        return Response.status(s.getStatus()).entity(toJson(s)).build();
+        return Response.status(s.getStatus()).entity(s).build();
     }
 
     /**
-     *
-     * @param disc
-     * @return
+     * Updates an existing disc with another disc.
+     * @param disc the disc with updated values.
+     * @param barcode the barcode of the book to be updated.
+     * @return the response to the request.
      */
     @PUT
-    @Path("discs/{mediaId}")
+    @Path("discs/{barcode}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateDisc(Disc disc) {
-        mediaService.updateDisc(disc);
-        return Response.ok().build();
-    }
-
-    /**
-     * Creates Json from an object.
-     * @param obj the object.
-     * @return Json-String
-     */
-    private String toJson(Object obj) {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.enable(SerializationFeature.INDENT_OUTPUT);
-        try {
-            return mapper.writeValueAsString(obj);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return "";
+    public Response updateDisc(Disc disc, @PathParam("barcode") String barcode) {
+        ServiceStatus s = mediaService.updateDisc(disc, barcode);
+        return Response.status(s.getStatus()).entity(s).build();
     }
 }

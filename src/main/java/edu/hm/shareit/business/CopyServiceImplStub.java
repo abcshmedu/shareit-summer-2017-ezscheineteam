@@ -3,7 +3,7 @@ package edu.hm.shareit.business;
 import edu.hm.shareit.model.Copy;
 
 /**
- * Stub f�r den Service: Anlegen von Exemplaren.
+ * Stub für den Service: Anlegen von Exemplaren.
  */
 public class CopyServiceImplStub implements CopyService {
     

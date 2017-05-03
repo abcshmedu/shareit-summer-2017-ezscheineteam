@@ -1,22 +1,34 @@
 package edu.hm.shareit.model;
 
+/**
+ * The Book class.
+ */
 public class Book extends Medium {
     private String author;
     private String isbn;
 
-    public Book() {
-        this("Unknown", "Unknown", "Unknown");
-    }
-
     @Override
     public String toString() {
-        return "{" +
-                "title='" + getTitle() + '\'' +
-                ", author='" + author + '\'' +
-                ", isbn='" + isbn + '\'' +
-                '}';
+        return "{"
+                + "title='" + getTitle() + '\''
+                + ", author='" + author + '\''
+                + ", isbn='" + isbn + '\''
+                + '}';
     }
 
+    /**
+     * Creates a new book.
+     */
+    public Book() {
+        super("");
+    }
+
+    /**
+     * Creates a new book.
+     * @param title - The title of the book.
+     * @param author - The author of the book.
+     * @param isbn - the ISBN10 or ISBN13 of the book.
+     */
     public Book(String title, String author, String isbn) {
         super(title);
         this.author = author;
@@ -25,20 +37,36 @@ public class Book extends Medium {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
 
         Book book = (Book) o;
 
-        if (author != null ? !author.equals(book.author) : book.author != null) return false;
+        if (author != null ? !author.equals(book.author) : book.author != null) {
+            return false;
+        }
         return isbn != null ? isbn.equals(book.isbn) : book.isbn == null;
     }
 
+    /**
+     * Returns the author of the book.
+     * @return author of the book.
+     */
     public String getAuthor() {
         return author;
     }
 
+    /**
+     * Returns the ISBN of the book.
+     * @return ISBN of the book.
+     */
     public String getIsbn() {
         return isbn;
     }

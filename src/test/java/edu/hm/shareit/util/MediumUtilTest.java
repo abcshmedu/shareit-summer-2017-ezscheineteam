@@ -1,5 +1,6 @@
 package edu.hm.shareit.util;
 
+import edu.hm.shareit.model.Medium;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -25,7 +26,7 @@ public class MediumUtilTest {
 
     @Test
     public void isValidISBN10WithoutSpaces() throws Exception {
-        String isbn = "1234567890";
+        String isbn = "1234567891";
         assertTrue(MediumUtil.isValidISBN(isbn));
     }
 
@@ -37,6 +38,14 @@ public class MediumUtilTest {
 
     @Test
     public void isValidBarcode() throws Exception {
+        String barcode = "56712346";
+        assertTrue(MediumUtil.isValidBarcode(barcode));
+    }
+
+    @Test
+    public void isNotValidBarcode() throws Exception {
+        String barcode = "1234567";
+        assertFalse(MediumUtil.isValidBarcode(barcode));
     }
 
 }

@@ -1,28 +1,40 @@
 package edu.hm.shareit.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
- *
+ * Base class of all Mediums.
  */
 public class Medium {
     private String title;
 
-    public Medium(String title) {
+    /**
+     * Creates a new Medium.
+     * @param title - the title of the medium.
+     */
+    public Medium(@JsonProperty("title") String title) {
         if (title == null) {
             throw new IllegalArgumentException("Title for medium cannot be null!");
         }
         this.title = title;
     }
 
+    /**
+     * Returns the title of the medium.
+     * @return the title of the medium.
+     */
     public String getTitle() {
         return title;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o)
+        if (this == o) {
             return true;
-        if (o == null || getClass() != o.getClass())
+        }
+        if (o == null || getClass() != o.getClass()) {
             return false;
+        }
 
         Medium medium = (Medium) o;
 

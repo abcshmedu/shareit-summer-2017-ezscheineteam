@@ -3,7 +3,7 @@ package edu.hm.shareit.business;
 import edu.hm.shareit.model.Copy;
 
 /**
- * Interface f�r den Service: Anlegen von Exemplaren.
+ * Interface für den Service: Anlegen von Exemplaren.
  */
 public interface CopyService {
   
