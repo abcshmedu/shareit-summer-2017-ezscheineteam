@@ -2,6 +2,8 @@ package edu.hm.shareit.model;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
@@ -10,6 +12,7 @@ import static org.junit.Assert.*;
 import java.io.IOException;
 
 public class BookTest {
+    @Rule
     public final ExpectedException exception = ExpectedException.none();
 
     static String jsonInput = "{\"title\":\"Buch\", \"author\": \"Author\", \"isbn\": \"1234\"}";
@@ -75,15 +78,12 @@ public class BookTest {
         expected = "LENO PALENO".hashCode() * 31 * 31 + "".hashCode();
         assertEquals(expected, b.hashCode());
     }
-    
+
     @Test
-    public void ToStringTest(){
+    public void ToStringTest() {
         Book b = new Book("LENO PALENO", "PETER", "1234567890123");
-        String expected = "{"
-                + "title='" + "LENO PALENO" + '\''
-                + ", author='" + "PETER" + '\''
-                + ", isbn='" + "1234567890123" + '\''
-                + '}';
+        String expected = "{" + "title='" + "LENO PALENO" + '\'' + ", author='" + "PETER" + '\'' + ", isbn='"
+                + "1234567890123" + '\'' + '}';
         assertEquals(expected, b.toString());
     }
 

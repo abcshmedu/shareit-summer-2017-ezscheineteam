@@ -8,8 +8,6 @@ import org.junit.rules.ExpectedException;
 
 /**
  * Tests fuer die Klasse Copy.
- * 
- * @author Martin
  *
  */
 public class CopyTest {
