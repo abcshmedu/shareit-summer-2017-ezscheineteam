@@ -7,6 +7,7 @@ import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
+import edu.hm.shareit.business.MediaServiceImplTest;
 import edu.hm.shareit.client.MediaClientTest;
 import edu.hm.shareit.model.BookTest;
 import edu.hm.shareit.model.CopyTest;
@@ -19,7 +20,7 @@ import edu.hm.shareit.util.MediumUtilTest;
 @RunWith(Suite.class)
 
 @Suite.SuiteClasses({ BookTest.class, CopyTest.class, DiscTest.class, MediumTest.class, MediaClientTest.class,
-		CopyResourceTest.class, MediaResourceTest.class, MediumUtilTest.class })
+		CopyResourceTest.class, MediaResourceTest.class, MediumUtilTest.class, MediaServiceImplTest.class })
 
 public class ShareItTestSuite {
 
