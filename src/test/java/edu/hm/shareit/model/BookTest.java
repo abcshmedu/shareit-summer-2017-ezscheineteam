@@ -3,14 +3,17 @@ package edu.hm.shareit.model;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
+import static org.junit.Assert.*;
 
 import java.io.IOException;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-
 public class BookTest {
+    public final ExpectedException exception = ExpectedException.none();
+    
     static String jsonInput = "{\"title\":\"Buch\", \"author\": \"Author\", \"isbn\": \"1234\"}";
+    
     @Test
     public void serialize() throws JsonProcessingException {
         ObjectMapper m = new ObjectMapper();
@@ -30,6 +33,32 @@ public class BookTest {
         assertEquals("1234", b.getIsbn());
     }
     
+    @Test
+    public void emptyBookEqualsNullTest(){
+        Book b = new Book();
+        assertFalse(b.equals(null));
+    }
+    
+    @Test
+    public void BookWithAllNullParams(){
+        exception.expect(IllegalArgumentException.class);
+        Book b = new Book(null, null, null);
+    }
+    
+    @Test
+    public void BookWithNullParamsEqualsTest(){
+        Book bookAuthorNull = new Book("LENO PALENO", null, "1234567890123");
+        Book bookISBNNull = new Book("LENO PALENO", "PETER", null);
+        assertFalse(bookAuthorNull.equals(bookISBNNull));
+        assertFalse(bookISBNNull.equals(bookAuthorNull));
+    }
+    
+    @Test
+    public void BooksWithDifferentParamsEqualsTest(){
+        Book bookOne = new Book("LENO PALENO", "PETER", "1234567890123");
+        Book bookTwo = new Book("LENO PALENO", "PETER", "1234567");
+        assertFalse(bookOne.equals(bookTwo));
+    }
 
 
     
