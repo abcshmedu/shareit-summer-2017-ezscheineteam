@@ -31,7 +31,6 @@ public class ShareItTestSuite {
 	@BeforeClass
 	public static void setUp() {
 		jetty = new Server(PORT);
-
 		jetty.setHandler(new WebAppContext(WEBAPP_DIR, APP_URL));
 		try {
 			jetty.start();
