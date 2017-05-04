@@ -31,7 +31,7 @@ public class MediaServiceImpl implements MediaService {
     @Override
     public ServiceStatus addDisc(Disc disc) {
         if (disc == null) {
-            return ServiceStatus.ERROR_BOOK_NOT_FOUND;
+            return ServiceStatus.ERROR_DISC_NOT_FOUND;
         }
         if (!MediumUtil.isValidBarcode(disc.getBarcode())) {
             return ServiceStatus.ERROR_BARCODE_FORMAT;
