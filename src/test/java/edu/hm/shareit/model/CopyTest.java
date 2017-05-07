@@ -21,9 +21,10 @@ public class CopyTest {
      */
     @Test
     public void simpleTest() {
-        Copy c = new Copy("Max Mustermann", new Medium("Medium Titel"));
+        Copy c = new Copy("Max Mustermann", new Medium("Medium Titel"), 1);
         assertEquals("Max Mustermann", c.getOwner());
-        assertEquals(c.getMedium().getTitle(), "Medium Titel");
+        assertEquals("Medium Titel", c.getMedium().getTitle());
+        assertEquals(1, c.getQuantity());
     }
 
     /**
@@ -34,7 +35,7 @@ public class CopyTest {
     public void ownerNullTest() {
         // expect exception as input parameter null
         exception.expect(IllegalArgumentException.class);
-        Copy c = new Copy(null, new Medium("Medium Title"));
+        Copy c = new Copy(null, new Medium("Medium Title"), 1);
     }
 
     /**
@@ -45,7 +46,17 @@ public class CopyTest {
     public void mediumNullTest() {
         // expect exception as input parameter null
         exception.expect(IllegalArgumentException.class);
-        Copy c = new Copy("Max Mustermann", null);
+        Copy c = new Copy("Max Mustermann", null, 1);
     }
 
+    /**
+     * Test wo Quantity, das dem Konstruktor uebergeben wird, 0 ist.
+     * Erwartet wird die IllegalArgumentException.
+     */
+    @Test
+    public void quantityNullTest() {
+        // expect exception as input parameter null
+        exception.expect(IllegalArgumentException.class);
+        Copy c = new Copy("Max Mustermann", new Medium("Medium Title"), 0);
+    }
 }

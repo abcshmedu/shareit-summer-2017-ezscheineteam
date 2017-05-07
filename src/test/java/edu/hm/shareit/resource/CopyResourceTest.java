@@ -2,6 +2,8 @@ package edu.hm.shareit.resource;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.IOException;
+
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
@@ -16,44 +18,44 @@ import edu.hm.shareit.client.CopyClient;
 public class CopyResourceTest {
     
     @Test
-    public void getDiscTest() {  
+    public void getDiscCopyTest() {  
        CopyClient client = new CopyClient();
-       Response response = client.getDisc("HANZ", "123456789");
-       assertEquals(Status.NOT_FOUND.getStatusCode(), response.getStatus());     
-    }
-    
-    @Test
-    public void getBookTest() {
-        CopyClient client = new CopyClient();
-        Response response = client.getBook("HANZ", "123456789");
-        assertEquals(Status.NOT_FOUND.getStatusCode(), response.getStatus());
-    }
-    
-    
-    @Test
-    public void getDiscsTest() {
-       CopyClient client = new CopyClient();
-       Response response = client.getDiscs("HANZ");
+       Response response = client.getDiscCopy("HANZ", "123456789");
        assertEquals(Status.NOT_IMPLEMENTED.getStatusCode(), response.getStatus());
        String entity = response.readEntity(String.class);     
        String expectedEntity = "{\"status\":501,\"detail\":\"Service noch nicht implementiert\"}";
-       assertEquals(expectedEntity, entity);       
+       assertEquals(expectedEntity, entity);   
     }
     
     @Test
-    public void getBooksTest() {
+    public void getBookCopyTest() {
         CopyClient client = new CopyClient();
-        Response response = client.getBooks("HANZ");
+        Response response = client.getBookCopy("HANZ", "123456789");
         assertEquals(Status.NOT_IMPLEMENTED.getStatusCode(), response.getStatus());
         String entity = response.readEntity(String.class);     
         String expectedEntity = "{\"status\":501,\"detail\":\"Service noch nicht implementiert\"}";
-        assertEquals(expectedEntity, entity);       
+        assertEquals(expectedEntity, entity);
+    }
+    
+    
+    @Test
+    public void getOwnerDiscCopiesTest() {
+       CopyClient client = new CopyClient();
+       Response response = client.getDiscCopies("HANZ");
+       assertEquals(Status.NOT_FOUND.getStatusCode(), response.getStatus());       
+    }
+    
+    @Test
+    public void getOwnerBookCopiesTest() {
+        CopyClient client = new CopyClient();
+        Response response = client.getBookCopies("HANZ");
+        assertEquals(Status.NOT_FOUND.getStatusCode(), response.getStatus());       
     }
 
     @Test
-    public void createDiscTest() {
+    public void getDiscCopiesTest() {
        CopyClient client = new CopyClient();
-       Response response = client.createDisc("HANZ", "{}");
+       Response response = client.getDiscCopies();
        assertEquals(Status.NOT_IMPLEMENTED.getStatusCode(), response.getStatus());
        String entity = response.readEntity(String.class);     
        String expectedEntity = "{\"status\":501,\"detail\":\"Service noch nicht implementiert\"}";
@@ -61,9 +63,9 @@ public class CopyResourceTest {
     }
     
     @Test
-    public void createBookTest() {
+    public void getBookCopiesTest() {
         CopyClient client = new CopyClient();
-        Response response = client.createBook("HANZ", "{}");
+        Response response = client.getBookCopies();
         assertEquals(Status.NOT_IMPLEMENTED.getStatusCode(), response.getStatus());
         String entity = response.readEntity(String.class);     
         String expectedEntity = "{\"status\":501,\"detail\":\"Service noch nicht implementiert\"}";
@@ -71,31 +73,73 @@ public class CopyResourceTest {
     }
     
     @Test
-    public void updateDiscTest() {
+    public void getOwnerCopiesTest() {
         CopyClient client = new CopyClient();
-        Response response = client.updateDisc("HANZ", "123456789", "{}");
-        assertEquals(Status.NOT_FOUND.getStatusCode(), response.getStatus());      
+        Response response = client.getOwnerCopies("HANZ");
+        assertEquals(Status.NOT_IMPLEMENTED.getStatusCode(), response.getStatus());
+        String entity = response.readEntity(String.class);     
+        String expectedEntity = "{\"status\":501,\"detail\":\"Service noch nicht implementiert\"}";
+        assertEquals(expectedEntity, entity);  
     }
     
     @Test
-    public void updateBookTest() {
+    public void getCopiesTest() {
         CopyClient client = new CopyClient();
-        Response response = client.updateBook("HANZ", "123456789", "{}");
-        assertEquals(Status.NOT_FOUND.getStatusCode(), response.getStatus());             
+        Response response = client.getCopies();
+        assertEquals(Status.NOT_IMPLEMENTED.getStatusCode(), response.getStatus());
+        String entity = response.readEntity(String.class);     
+        String expectedEntity = "{\"status\":501,\"detail\":\"Service noch nicht implementiert\"}";
+        assertEquals(expectedEntity, entity);  
     }
     
     @Test
-    public void deleteDiscTest() {
-        CopyClient client = new CopyClient();
-        Response response = client.deleteDisc("HANZ", "123456789");
-        assertEquals(Status.NOT_FOUND.getStatusCode(), response.getStatus());      
+    public void createCopyTest() {
+       CopyClient client = new CopyClient();
+       Response response = client.createCopy("{}");
+       assertEquals(Status.NOT_IMPLEMENTED.getStatusCode(), response.getStatus());
+       String entity = response.readEntity(String.class);     
+       String expectedEntity = "{\"status\":501,\"detail\":\"Service noch nicht implementiert\"}";
+       assertEquals(expectedEntity, entity);       
     }
     
     @Test
-    public void deleteBookTest() {
+    public void updateDiscCopyTest() throws IOException {
         CopyClient client = new CopyClient();
-        Response response = client.deleteBook("HANZ", "123456789");
-        assertEquals(Status.NOT_FOUND.getStatusCode(), response.getStatus());             
+        Response response = client.updateDiscCopy("HANZ", "123456789", "{}");
+        assertEquals(Status.NOT_IMPLEMENTED.getStatusCode(), response.getStatus());
+        String entity = response.readEntity(String.class);     
+        String expectedEntity = "{\"status\":501,\"detail\":\"Service noch nicht implementiert\"}";
+        assertEquals(expectedEntity, entity);
+    }
+    
+    @Test
+    public void updateBookCopyTest() {
+        CopyClient client = new CopyClient();
+        Response response = client.updateBookCopy("HANZ", "123456789", "{}");
+        assertEquals(Status.NOT_IMPLEMENTED.getStatusCode(), response.getStatus());
+        String entity = response.readEntity(String.class);     
+        String expectedEntity = "{\"status\":501,\"detail\":\"Service noch nicht implementiert\"}";
+        assertEquals(expectedEntity, entity);         
+    }
+    
+    @Test
+    public void deleteDiscCopyTest() {
+        CopyClient client = new CopyClient();
+        Response response = client.deleteDiscCopy("HANZ", "123456789");
+        assertEquals(Status.NOT_IMPLEMENTED.getStatusCode(), response.getStatus());
+        String entity = response.readEntity(String.class);     
+        String expectedEntity = "{\"status\":501,\"detail\":\"Service noch nicht implementiert\"}";
+        assertEquals(expectedEntity, entity);    
+    }
+    
+    @Test
+    public void deleteBookCopyTest() {
+        CopyClient client = new CopyClient();
+        Response response = client.deleteBookCopy("HANZ", "123456789");
+        assertEquals(Status.NOT_IMPLEMENTED.getStatusCode(), response.getStatus());
+        String entity = response.readEntity(String.class);     
+        String expectedEntity = "{\"status\":501,\"detail\":\"Service noch nicht implementiert\"}";
+        assertEquals(expectedEntity, entity);          
     }
     
 }

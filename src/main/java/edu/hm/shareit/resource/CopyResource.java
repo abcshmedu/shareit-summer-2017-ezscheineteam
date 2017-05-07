@@ -1,8 +1,10 @@
 package edu.hm.shareit.resource;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -13,9 +15,7 @@ import edu.hm.shareit.business.CopyService;
 import edu.hm.shareit.business.CopyServiceImplStub;
 import edu.hm.shareit.business.ServiceResult;
 import edu.hm.shareit.business.ServiceStatus;
-import edu.hm.shareit.model.Book;
 import edu.hm.shareit.model.Copy;
-import edu.hm.shareit.model.Disc;
 
 /**
  * REST-Endpoint für das Anlegen von Exemplaren.
@@ -28,48 +28,109 @@ public class CopyResource {
      */
     private final CopyService copyService = new CopyServiceImplStub();
 
+    
     /**
-     * Legt ein neues Exemplar Buch an.
-     * @param book Das Exemplar Buch
-     * @param user Das Konto welchem das Exemplar angelegt werden soll.
-     * @return Response Objekt
+     * Legt ein neues Exemplar an.
+     * @param copy Das Exemplar.
+     * @return Response Objekt.
      */
     @POST
-    @Path("{user}/books")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createBook(Book book, @PathParam("user")String user) {
-        Copy copy = new Copy(user, book);
-        ServiceStatus result = copyService.addBook(copy);
+    public Response createCopy(Copy copy) {
+        ServiceStatus result = copyService.addCopy(copy);
+        return Response.status(result.getStatus()).entity(result).build();
+    }
+    
+    
+    /**
+     * Aktualisiert ein vorhandenes Buch Exemplar.
+     * @param copy Das Exemplar mit aktualisierten Daten.
+     * @param owner Name des Besitzers dessen Buch Exemplar.
+     * @param isbn Die ISBN des Buches.
+     * @return Response Objekt.
+     */
+    @PUT
+    @Path("{owner}/books/{isbn}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateBookCopy(Copy copy, @PathParam("owner")String owner, @PathParam("isbn")String isbn) {
+        ServiceStatus result = copyService.updateBookCopy(copy, owner, isbn);
+        return Response.status(result.getStatus()).entity(result).build();
+    }
+
+    
+    /**
+     * Aktualisiert ein vorhandenes Disc Exemplar.
+     * @param copy Das Exemplar mit aktualisierten Daten.
+     * @param owner Name des Besitzers dessen Disc Exemplar.
+     * @param barcode Der Barcode der Disc.
+     * @return Response Objekt.
+     */
+    @PUT
+    @Path("{owner}/discs/{barcode}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateDiscCopy(Copy copy, @PathParam("owner")String owner, @PathParam("barcode")String barcode) {
+        ServiceStatus result = copyService.updateDiscCopy(copy, owner, barcode);
+        return Response.status(result.getStatus()).entity(result).build();
+    }
+    
+    /**
+     * Löscht ein vorhandenes Buch Exemplar.
+     * @param owner Name des Besitzers dessen Buch Exemplar.
+     * @param isbn Die ISBN des Buches.
+     * @return Response Objekt.
+     */
+    @DELETE
+    @Path("{owner}/books/{isbn}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteBookCopy(@PathParam("owner")String owner, @PathParam("isbn")String isbn) {
+        ServiceStatus result = copyService.deleteBookCopy(owner, isbn);
         return Response.status(result.getStatus()).entity(result).build();
     }
 
     /**
-     * Legt ein neues Exemplar Disc an.
-     * @param disc Das Exemplar Disc
-     * @param user Das Konto welchem das Exemplar angelegt werden soll.
-     * @return Response Objekt 
+     * Löscht ein vorhandenes Disc Exemplar.
+     * @param owner Name des Besitzers dessen Disc Exemplar.
+     * @param barcode Der Barcode der Disc.
+     * @return Response Objekt.
      */
-    @POST
-    @Path("{user}/discs")
+    @DELETE
+    @Path("{owner}/discs/{barcode}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createDisc(Disc disc, @PathParam("user")String user) {
-        Copy copy = new Copy(user, disc);
-        ServiceStatus result = copyService.addDisc(copy);
+    public Response deleteDiscCopy(@PathParam("owner")String owner, @PathParam("barcode")String barcode) {
+        ServiceStatus result = copyService.deleteDiscCopy(owner, barcode);
         return Response.status(result.getStatus()).entity(result).build();
     }
 
     /**
-     * Liefert alle Exemplare Buch die dem Konto angelegt wurden.
-     * @param user Der Benutzername des Kontos.
-     * @return response Objekt
+     * Liefert alle Exemplare.
+     * @return Response Objekt.
      */
     @GET
-    @Path("{user}/books")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getBooks(@PathParam("user")String user) {
-        ServiceResult result = copyService.getBooks(user);
+    public Response getCopies() {
+        ServiceResult result = copyService.getCopies();
+        ServiceStatus status = result.getStatus();
+        return Response.status(status.getStatus())
+                .entity(result.containsResult() ? result.getResult() : status)
+                .build();
+    }
+    
+    /**
+     * Liefert ein vorhandenes Buch Exemplar.
+     * @param owner Name des Besitzers dessen Buch Exemplar.
+     * @param isbn Die ISBN des Buches.
+     * @return Response Objekt.
+     */
+    @GET
+    @Path("{owner}/books/{isbn}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getBookCopy(@PathParam("owner")String owner, @PathParam("isbn")String isbn) {
+        ServiceResult result = copyService.getBookCopy(owner, isbn);
         ServiceStatus status = result.getStatus();
         return Response.status(status.getStatus())
                 .entity(result.containsResult() ? result.getResult() : status)
@@ -77,15 +138,63 @@ public class CopyResource {
     }
 
     /**
-     * Liefert alle Exemplare Disc die dem Konto angelegt wurden.
-     * @param user Der Benutzername des Kontos.
-     * @return response Objekt
+     * Liefert ein vorhandenes Disc Exemplar.
+     * @param owner Name des Besitzers dessen Disc Exemplar.
+     * @param barcode Der Barcode der Disc.
+     * @return Response Objekt.
      */
     @GET
-    @Path("{user}/discs")
+    @Path("{owner}/discs/{barcode}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getDiscs(@PathParam("user")String user) {
-        ServiceResult result = copyService.getDiscs(user);
+    public Response getDiscCopy(@PathParam("owner")String owner, @PathParam("barcode")String barcode) {
+        ServiceResult result = copyService.getDiscCopy(owner, barcode);
+        ServiceStatus status = result.getStatus();
+        return Response.status(status.getStatus())
+                .entity(result.containsResult() ? result.getResult() : status)
+                .build();
+    }
+    
+
+    /**
+     * Liefert alle Buch Exemplare.
+     * @return Response Objekt.
+     */
+    @GET
+    @Path("books")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getBookCopies() {
+        ServiceResult result = copyService.getBookCopies();
+        ServiceStatus status = result.getStatus();
+        return Response.status(status.getStatus())
+                .entity(result.containsResult() ? result.getResult() : status)
+                .build();
+    }
+
+    /**
+     * Liefert alle Disc Exemplare.
+     * @return Response Objekt.
+     */
+    @GET
+    @Path("discs")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getDiscCopies() {
+        ServiceResult result = copyService.getDiscCopies();
+        ServiceStatus status = result.getStatus();
+        return Response.status(status.getStatus())
+                .entity(result.containsResult() ? result.getResult() : status)
+                .build();
+    }
+    
+    /**
+     * Liefert alle Exemplare eines bestimmten Besitzers.
+     * @param owner Name des Besitzers.
+     * @return Response Objekt.
+     */
+    @GET
+    @Path("{owner}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getOwnerCopies(@PathParam("owner")String owner) {
+        ServiceResult result = copyService.getOwnerCopies(owner);
         ServiceStatus status = result.getStatus();
         return Response.status(status.getStatus())
                 .entity(result.containsResult() ? result.getResult() : status)
