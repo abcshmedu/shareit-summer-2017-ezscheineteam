@@ -2,8 +2,6 @@ package edu.hm.shareit.resource;
 
 import static org.junit.Assert.assertEquals;
 
-import java.io.IOException;
-
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
@@ -103,7 +101,7 @@ public class CopyResourceTest {
     }
     
     @Test
-    public void updateDiscCopyTest() throws IOException {
+    public void updateDiscCopyTest() {
         CopyClient client = new CopyClient();
         Response response = client.updateDiscCopy("HANZ", "123456789", "{}");
         assertEquals(Status.NOT_IMPLEMENTED.getStatusCode(), response.getStatus());

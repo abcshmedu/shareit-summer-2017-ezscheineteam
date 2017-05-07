@@ -14,39 +14,37 @@ import edu.hm.shareit.model.CopyTest;
 import edu.hm.shareit.model.DiscTest;
 import edu.hm.shareit.model.MediumTest;
 import edu.hm.shareit.resource.CopyResourceTest;
-import edu.hm.shareit.resource.MediaResourceTest;
 import edu.hm.shareit.util.MediumUtilTest;
 
 @RunWith(Suite.class)
-
 @Suite.SuiteClasses({ BookTest.class, CopyTest.class, DiscTest.class, MediumTest.class, MediaClientTest.class,
-		CopyResourceTest.class, MediaResourceTest.class, MediumUtilTest.class, MediaServiceImplTest.class })
-
+        CopyResourceTest.class, MediumUtilTest.class, MediaServiceImplTest.class })
+@SuppressWarnings("JavadocMethod")
 public class ShareItTestSuite {
 
-	public static final String APP_URL = "/";
-	public static final int PORT = 8080;
-	public static final String WEBAPP_DIR = "./src/main/webapp/";
-	public static Server jetty;
+    public static final String APP_URL = "/";
+    public static final int PORT = 8080;
+    public static final String WEBAPP_DIR = "./src/main/webapp/";
+    private static Server jetty;
+  
 
-	@BeforeClass
-	public static void setUp() {
-		jetty = new Server(PORT);
-		jetty.setHandler(new WebAppContext(WEBAPP_DIR, APP_URL));
-		try {
-			jetty.start();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	@AfterClass
-        public static void tearDown() {
-			try {
-				jetty.stop();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+    @BeforeClass
+    public static void setUp() {
+        jetty = new Server(PORT);
+        jetty.setHandler(new WebAppContext(WEBAPP_DIR, APP_URL));
+        try {
+            jetty.start();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+    }
 
+    @AfterClass
+    public static void tearDown() {
+        try {
+            jetty.stop();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

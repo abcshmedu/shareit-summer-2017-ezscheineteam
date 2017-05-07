@@ -9,7 +9,9 @@ import javax.ws.rs.core.Response;
 
 import static org.junit.Assert.assertEquals;
 
+@SuppressWarnings("JavadocType")
 public class MediaClientTest {
+    @SuppressWarnings("JavadocMethod")
     @Test
     public void testCreateBook() {
         MediaClient client = new MediaClient();
@@ -20,6 +22,7 @@ public class MediaClientTest {
         assertEquals(asserted, entity);
     }
 
+    @SuppressWarnings("JavadocMethod")
     @Test
     public void testCreateDisc() {
         MediaClient client = new MediaClient();
@@ -30,6 +33,7 @@ public class MediaClientTest {
         assertEquals(asserted, entity);
     }
 
+    @SuppressWarnings("JavadocMethod")
     @Test
     public void testPutBook() {
         MediaClient client = new MediaClient();
@@ -40,16 +44,18 @@ public class MediaClientTest {
         assertEquals(asserted, entity);
     }
 
+    @SuppressWarnings("JavadocMethod")
     @Test
     public void testPutDisc() {
         MediaClient client = new MediaClient();
-        Disc disc = new Disc("New Title", "12345678", 0,"The Director");
+        Disc disc = new Disc("New Title", "12345678", 0, "The Director");
         Response r = client.updateDisc(disc);
         String entity = r.readEntity(String.class);
         String asserted = "{\"status\":200,\"detail\":\"Tutto bene.\"}";
         assertEquals(asserted, entity);
     }
 
+    @SuppressWarnings("JavadocMethod")
     @Test
     public void getBook() throws Exception {
         MediaClient client = new MediaClient();
@@ -57,6 +63,7 @@ public class MediaClientTest {
         assertEquals(ServiceStatus.OK.getStatus(), r.getStatus());
     }
 
+    @SuppressWarnings("JavadocMethod")
     @Test
     public void getDisc() throws Exception {
         MediaClient client = new MediaClient();
@@ -64,6 +71,7 @@ public class MediaClientTest {
         assertEquals(ServiceStatus.OK.getStatus(), r.getStatus());
     }
 
+    @SuppressWarnings("JavadocMethod")
     @Test
     public void testGetBookList() {
         MediaClient client = new MediaClient();
@@ -71,6 +79,7 @@ public class MediaClientTest {
         assertEquals(ServiceStatus.OK.getStatus(), r.getStatus());
     }
 
+    @SuppressWarnings("JavadocMethod")
     @Test
     public void testGetDiscList() {
         MediaClient client = new MediaClient();
@@ -78,6 +87,7 @@ public class MediaClientTest {
         assertEquals(ServiceStatus.OK.getStatus(), r.getStatus());
     }
 
+    @SuppressWarnings("JavadocMethod")
     @Test
     public void testGetBookWithBadRequest() {
         MediaClient client = new MediaClient();
@@ -85,6 +95,7 @@ public class MediaClientTest {
         assertEquals(ServiceStatus.ERROR_ISBN_FORMAT.getStatus(), r.getStatus());
     }
 
+    @SuppressWarnings("JavadocMethod")
     @Test
     public void testGetBookWithBookNotFound() {
         MediaClient client = new MediaClient();

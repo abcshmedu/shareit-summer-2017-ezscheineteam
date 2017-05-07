@@ -21,8 +21,9 @@ public final class MediumUtil {
      * @return true if valid, else false.
      */
     public static boolean isValidISBN(String isbn) {
-        if (isbn == null)
+        if (isbn == null) {
             return false;
+        }
         String regex = "^(\\d{3}[- ]?)?\\d[- ]?\\d{5}[- ]?\\d{3}[- ]?\\d$";
         Pattern p = Pattern.compile(regex);
         return p.matcher(isbn).matches();
