@@ -1,31 +1,31 @@
 <h2>Neue Disc erstellen</h2>
-<form name="newBookForm" class="form-horizontal">
+<form name="newDiscForm" class="form-horizontal">
     <div class="form-group">
-        <label for="discTitle" class="col-sm-2 control-label">Title:</label>
-        <div class="col-sm-10">
-            <input id="discTitle" ng-model="disc.title" class="form-control" type="text"
+        <label for="discTitle" class="col-sm-1 control-label">Title:</label>
+        <div class="col-sm-11">
+            <input id="discTitle" required ng-model="disc.title" class="form-control" type="text"
                    placeholder="Title of the disc..."/>
         </div>
     </div>
     <div class="form-group">
-        <label for="discDirector" class="col-sm-2 control-label">Director:</label>
-        <div class="col-sm-4">
-            <input id="discDirector" ng-model="disc.director" class="form-control" type="text"
+        <label for="discDirector" class="col-sm-1 control-label">Director:</label>
+        <div class="col-sm-6">
+            <input id="discDirector" required ng-model="disc.director" class="form-control" type="text"
                    placeholder="Director of the disc..."/>
         </div>
     </div>
     <div class="form-group">
-        <label for="discBarcode" class="col-sm-2 control-label">Barcode:</label>
-        <div class="col-sm-4">
-            <input id="discBarcode" ng-model="disc.barcode" class="form-control" type="text"
+        <label for="discBarcode" class="col-sm-1 control-label">Barcode:</label>
+        <div class="col-sm-6">
+            <input id="discBarcode" ng-pattern="/^\d{8}(\d{5})?$/" required ng-model="disc.barcode" class="form-control" type="text"
                    placeholder="Barcode of the disc..."/>
         </div>
     </div>
     <div class="form-group">
-        <label for="discFsk" class="col-sm-2 control-label">FSK:</label>
+        <label for="discFsk" class="col-sm-1 control-label">FSK:</label>
         <div class="col-sm-2">
-            <select id="discFsk" ng-model="disc.fsk" class="form-control">
-                <option>0</option>
+            <select id="discFsk" class="form-control" ng-init="disc.fsk = disc.fsk || '0'" ng-model="disc.fsk">
+                <option value="0" >0</option>
                 <option>6</option>
                 <option>12</option>
                 <option>16</option>
@@ -33,10 +33,15 @@
             </select>
         </div>
     </div>
+    <div id="status" class="alert" ng-show="statusmsg">
+        <p><strong>{{message}}</strong></p>
+        <p><strong>Detail: </strong>{{detail}}</p>
+        <p><strong>Status: </strong>{{status}}</p>
+    </div>
     <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-            <button ng-click="saveDisc(book)" type="submit" class="btn btn-primary">Save</button>
-            <button type="button" class="btn btn-default">Cancel</button>
+        <div class="col-sm-offset-1 col-sm-11">
+            <button ng-click="saveDisc(disc, newDiscForm)" ng-disabled="newDiscForm.$invalid" type="submit" class="btn btn-primary">Save</button>
+            <button ng-click="cancelEdit()" type="button" class="btn btn-default">Cancel</button>
         </div>
     </div>
 </form>

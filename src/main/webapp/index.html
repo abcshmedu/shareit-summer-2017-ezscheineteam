@@ -8,30 +8,38 @@
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <link rel="stylesheet" href="css/shareit.css">
 <body>
+<nav class="navbar navbar-inverse bg-inverse">
+    <a class="navbar-brand" href="#">
+        <span class="glyphicon glyphicon-share"></span>
+        Shareit: Webapp</a>
+</nav>
 <div class="container-fluid">
-    <nav class="navbar navbar-toggleable-md navbar-inverse navbar-fixed-top bg-inverse">
-        <a class="navbar-brand" href="#">
-            <span class="glyphicon glyphicon-share"></span>
-            Shareit: Webapp</a>
-    </nav>
     <div class="row">
         <nav class="col-sm-3 col-md-2 hidden-xs bg-faded sidebar">
-            <ul class="nav nav-pills flex-column">
-                <li class="nav-item"><a href="#/">Alle Media</a></li>
-                <li class="nav-item"><a href="#!newbook">Buch erstellen</a></li>
-                <li class="nav-item"><a href="#!newdisc">Disc erstellen</a></li>
+            <ul class="nav nav-sidebar">
+                <li class="nav-item"><a href="#/"><i class="glyphicon glyphicon-list"></i>Alle Media</a></li>
+                <li class="nav-item"><a href="#!newbook"><i class="glyphicon glyphicon-plus"></i>Buch erstellen</a></li>
+                <li class="nav-item"><a href="#!newdisc"><i class="glyphicon glyphicon-plus"></i>Disc erstellen</a></li>
             </ul>
         </nav>
-        <main class="col-sm-9 col-sm-offset-3 cold-md-10 col-md-offset-2 pt-3">
+        <main class="col-sm-9 cold-md-10 pt-3">
             <div ng-view></div>
         </main>
     </div>
 </div>
+<footer>
+    <div class="row">
+        <div class="col-sm-12"><strong>&copy;2017 Hochschule München:</strong> Software Architektur - ezScheineTeam</div>
+    </div>
+</footer>
 <script src="lib/bootstrap.min.js"></script>
 <script src="lib/angularjs-1.6.4.min.js"></script>
 <script src="lib/angular-route.min.js"></script>
 <script src="js/app.js"></script>
 <script src="js/controller/MediumController.js"></script>
 <script src="js/controller/EditBookController.js"></script>
+<script src="js/controller/EditDiscController.js"></script>
+<script src="js/services/BookData.js"></script>
+<script src="js/services/DiscData.js"></script>
 </body>
 </html>
