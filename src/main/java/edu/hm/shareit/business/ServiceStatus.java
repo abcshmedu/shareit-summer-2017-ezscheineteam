@@ -17,26 +17,10 @@ public enum ServiceStatus {
     ERROR_DISC_NOT_FOUND(Response.Status.NOT_FOUND, "Eine Disc mit diesem Barcode existiert nicht."),
     ERROR_PARSING_JSON(Response.Status.BAD_REQUEST, "Das JSON-Objekt konnte nicht gelesen werden."),
     ERROR_NOT_IMPLEMENTED(Response.Status.NOT_IMPLEMENTED, "Service noch nicht implementiert"),
-    ERROR_BOOK_LIST_EMPTY(Response.Status.NOT_FOUND, "Die Bücher-Liste ist leer."),
+    ERROR_BOOK_LIST_EMPTY(Response.Status.NOT_FOUND, "Die Bï¿½cher-Liste ist leer."),
     ERROR_DISC_LIST_EMPTY(Response.Status.NOT_FOUND, "Die Disc-Liste ist leer."),
     ERROR_ISBN_ALREADY_EXIST(Response.Status.BAD_REQUEST, "Ein Buch mit dieser ISBN existiert bereits."),
     ERROR_BARCODE_ALREADY_EXIST(Response.Status.BAD_REQUEST, "Eine Disc mit diesem Barcode existiert bereits.");
-
-    /**
-     * Returns the status of an operation.
-     * @param status the status of an operation.
-     */
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
-    /**
-     * Returns more meta data to the status of an operation.
-     * @param detail - More meta data to the status of an operation.
-     */
-    public void setDetail(String detail) {
-        this.detail = detail;
-    }
 
     private int status;
     private String detail;
