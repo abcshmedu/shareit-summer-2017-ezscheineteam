@@ -9,8 +9,10 @@ import org.junit.Test;
 
 import edu.hm.shareit.client.CopyClient;
 
+@SuppressWarnings("JavadocType")
 public class MediaResourceTest {
 
+    @SuppressWarnings("JavadocMethod")
     @Test
     public void getBookTest() {
         CopyClient client = new CopyClient();

@@ -20,33 +20,36 @@ import edu.hm.shareit.util.MediumUtilTest;
 @RunWith(Suite.class)
 
 @Suite.SuiteClasses({ BookTest.class, CopyTest.class, DiscTest.class, MediumTest.class, MediaClientTest.class,
-		CopyResourceTest.class, MediaResourceTest.class, MediumUtilTest.class, MediaServiceImplTest.class })
+        CopyResourceTest.class, MediaResourceTest.class, MediumUtilTest.class, MediaServiceImplTest.class })
 
+@SuppressWarnings("JavadocType")
 public class ShareItTestSuite {
 
-	public static final String APP_URL = "/";
-	public static final int PORT = 8080;
-	public static final String WEBAPP_DIR = "./src/main/webapp/";
-	public static Server jetty;
-
-	@BeforeClass
-	public static void setUp() {
-		jetty = new Server(PORT);
-		jetty.setHandler(new WebAppContext(WEBAPP_DIR, APP_URL));
-		try {
-			jetty.start();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	@AfterClass
-        public static void tearDown() {
-			try {
-				jetty.stop();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+    public static final String APP_URL = "/";
+    public static final int PORT = 8080;
+    public static final String WEBAPP_DIR = "./src/main/webapp/";
+    private static Server jetty;
+  
+    @SuppressWarnings("JavadocMethod")
+    @BeforeClass
+    public static void setUp() {
+        jetty = new Server(PORT);
+        jetty.setHandler(new WebAppContext(WEBAPP_DIR, APP_URL));
+        try {
+            jetty.start();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+    }
 
+    @AfterClass
+    @SuppressWarnings("JavadocMethod")
+    public static void tearDown() {
+        try {
+            jetty.stop();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    //CHECKSTYLE:ON: checkstyle:javadocmethod
 }
