@@ -16,7 +16,9 @@ import edu.hm.shareit.model.MediumTest;
 import edu.hm.shareit.resource.CopyResourceTest;
 import edu.hm.shareit.util.MediumUtilTest;
 
+//CHECKSTYLE:OFF:
 @RunWith(Suite.class)
+//CHECKSTYLE:ON:
 @Suite.SuiteClasses({ BookTest.class, CopyTest.class, DiscTest.class, MediumTest.class, MediaClientTest.class,
         CopyResourceTest.class, MediumUtilTest.class, MediaServiceImplTest.class })
 @SuppressWarnings("JavadocMethod")
