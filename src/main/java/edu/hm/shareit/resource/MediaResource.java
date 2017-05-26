@@ -12,7 +12,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 /**
- *
+ *  Contains the rest api handlers.
  */
 @Path("media")
 public class MediaResource {
