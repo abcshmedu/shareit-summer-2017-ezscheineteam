@@ -28,6 +28,40 @@ public final class MediumUtil {
         Pattern p = Pattern.compile(regex);
         return p.matcher(isbn).matches();
     }
+    private static final int ISBN13_FORMAT_GROUP1_END = 3;
+    private static final int ISBN13_FORMAT_GROUP2_END = 4;
+    private static final int ISBN13_FORMAT_GROUP3_END = 9;
+    private static final int ISBN13_FORMAT_GROUP4_END = 12;
+    private static final int ISBN13_FORMAT_GROUP5_END = 13;
+
+    private static final int ISBN10_FORMAT_GROUP1_END = 1;
+    private static final int ISBN10_FORMAT_GROUP2_END = 6;
+    private static final int ISBN10_FORMAT_GROUP3_END = 9;
+    private static final int ISBN10_FORMAT_GROUP4_END = 10;
+
+    private static final int ISBN13_LENGTH = 13;
+    /**
+     * Formats the ISBN.
+     * @param isbn which should be formatted.
+     * @return the formatted isbn
+     */
+    public static String formatISBN(String isbn) {
+        isbn = isbn.replaceAll("-", "");
+        if (isbn.length() == ISBN13_LENGTH) {
+            return String.format("%s-%s-%s-%s-%s",
+                    isbn.substring(0, ISBN13_FORMAT_GROUP1_END),
+                    isbn.substring(ISBN13_FORMAT_GROUP1_END, ISBN13_FORMAT_GROUP2_END),
+                    isbn.substring(ISBN13_FORMAT_GROUP2_END, ISBN13_FORMAT_GROUP3_END),
+                    isbn.substring(ISBN13_FORMAT_GROUP3_END, ISBN13_FORMAT_GROUP4_END),
+                    isbn.substring(ISBN13_FORMAT_GROUP4_END, ISBN13_FORMAT_GROUP5_END));
+        } else {
+            return String.format("%s-%s-%s-%s",
+                    isbn.substring(0, ISBN10_FORMAT_GROUP1_END),
+                    isbn.substring(ISBN10_FORMAT_GROUP1_END, ISBN10_FORMAT_GROUP2_END),
+                    isbn.substring(ISBN10_FORMAT_GROUP2_END, ISBN10_FORMAT_GROUP3_END),
+                    isbn.substring(ISBN10_FORMAT_GROUP3_END, ISBN10_FORMAT_GROUP4_END));
+        }
+    }
 
     /**
      * Checks if barcode is in a valid EAN8 or EAN13 Format.

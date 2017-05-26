@@ -71,6 +71,14 @@ public class Book extends Medium {
         return isbn;
     }
 
+    /**
+     * Sets the ISBN of the book.
+     * @param isbn new isbn
+     */
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+
     @Override
     public int hashCode() {
         int result = super.hashCode();

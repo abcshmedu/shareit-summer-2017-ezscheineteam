@@ -14,14 +14,6 @@ public class MediaRepositoryStub implements MediaRepository {
     private static List<Book> allBooks = new ArrayList<>();
     private static List<Disc> allDiscs = new ArrayList<>();
 
-    static {
-        allBooks.add(new Book("Die Eule mit der Beule", "Susanne Weber", "978-3789167065"));
-        allBooks.add(new Book("Das Buch", "DerAutor", "1234567890"));
-        allBooks.add(new Book("Design Patterns. Elements of Reusable Object Oriented Software.", "Gang of four", "978-0201633610"));
-        allDiscs.add(new Disc("Never Gonna Give You Up", "12345678", 0, "Rick Astley"));
-        allDiscs.add(new Disc("Die CD", "87654321", 0, "The Artist"));
-    }
-
     @Override
     public boolean createBook(Book book) {
         for (Book b : allBooks) {

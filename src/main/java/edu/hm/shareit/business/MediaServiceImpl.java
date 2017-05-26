@@ -22,6 +22,7 @@ public class MediaServiceImpl implements MediaService {
         if (!MediumUtil.isValidISBN(book.getIsbn())) {
             return ServiceStatus.ERROR_ISBN_FORMAT;
         }
+        book.setIsbn(MediumUtil.formatISBN(book.getIsbn()));
         if (!mediaRepository.createBook(book)) {
             return ServiceStatus.ERROR_ISBN_ALREADY_EXIST;
         }
@@ -69,7 +70,8 @@ public class MediaServiceImpl implements MediaService {
             return ServiceStatus.ERROR_ISBN_FORMAT;
         }
 
-        if (!mediaRepository.updateBook(book, isbn)) {
+
+        if (!mediaRepository.updateBook(book, MediumUtil.formatISBN(isbn))) {
             return ServiceStatus.ERROR_BOOK_NOT_FOUND;
         }
 
