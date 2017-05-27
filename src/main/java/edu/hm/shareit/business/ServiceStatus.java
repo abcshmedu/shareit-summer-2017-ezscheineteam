@@ -13,6 +13,8 @@ public enum ServiceStatus {
     OK(Response.Status.OK, "Tutto bene."),
     ERROR_ISBN_FORMAT(Response.Status.BAD_REQUEST, "Die ISBN wurde falsch angegeben oder formatiert."),
     ERROR_BARCODE_FORMAT(Response.Status.BAD_REQUEST, "Der Barcode wurde falsch angegeben oder formatiert."),
+    ERROR_ISBN_CHANGE(Response.Status.BAD_REQUEST, "Die ISBN darf nicht modifiziert werden."),
+    ERROR_BARCODE_CHANGE(Response.Status.BAD_REQUEST, "Der Barcode darf nicht modifiziert werden."),
     ERROR_BOOK_NOT_FOUND(Response.Status.NOT_FOUND, "Ein Buch mit dieser ISBN existiert nicht."),
     ERROR_DISC_NOT_FOUND(Response.Status.NOT_FOUND, "Eine Disc mit diesem Barcode existiert nicht."),
     ERROR_PARSING_JSON(Response.Status.BAD_REQUEST, "Das JSON-Objekt konnte nicht gelesen werden."),

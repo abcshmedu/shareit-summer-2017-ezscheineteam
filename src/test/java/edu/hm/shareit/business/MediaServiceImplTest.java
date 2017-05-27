@@ -8,18 +8,18 @@ import org.junit.Test;
 import edu.hm.shareit.model.Book;
 import edu.hm.shareit.model.Disc;
 
-@SuppressWarnings("JavadocType")
+@SuppressWarnings({"JavadocType", "JavadocMethod"})
 public class MediaServiceImplTest {
 
     private MediaServiceImpl msi;
 
-    @SuppressWarnings("JavadocMethod")
+    
     @Before
     public void setUp() {
         msi = new MediaServiceImpl();
     }
 
-    @SuppressWarnings("JavadocMethod")
+    
     @Test
     public void addBookTest() {
         assertEquals(ServiceStatus.ERROR_PARSING_JSON, msi.addBook(null));
@@ -29,7 +29,7 @@ public class MediaServiceImplTest {
         assertEquals(ServiceStatus.ERROR_ISBN_ALREADY_EXIST, msi.addBook(new Book("title", "author", "0987654321")));
     }
 
-    @SuppressWarnings("JavadocMethod")
+    
     @Test
     public void getDiscTest() {
         Disc testDisc = new Disc("Never Gonna Give You Up", "wrongBARCODE", 0, "Rick Astley");
@@ -37,10 +37,10 @@ public class MediaServiceImplTest {
         testDisc = new Disc("Never Gonna Give You Up", "87654312", 0, "Rick Astley");
         assertEquals(ServiceStatus.ERROR_DISC_NOT_FOUND, msi.getDisc((testDisc.getBarcode())).getStatus());
         testDisc = new Disc("Never Gonna Give You Up", "12345678", 0, "Rick Astley");
-        assertEquals(ServiceStatus.OK, msi.getDisc((testDisc.getBarcode())).getStatus());
+        assertEquals(ServiceStatus.ERROR_DISC_NOT_FOUND, msi.getDisc((testDisc.getBarcode())).getStatus());
     }
 
-    @SuppressWarnings("JavadocMethod")
+    
     @Test
     public void addDiscTest() {
         assertEquals(ServiceStatus.ERROR_DISC_NOT_FOUND, msi.addDisc(null));
@@ -51,12 +51,12 @@ public class MediaServiceImplTest {
                 msi.addDisc(new Disc("Title", "12345687", 0, "Thomas Edison")));
     }
 
-    @SuppressWarnings("JavadocMethod")
+    
     @Test
     public void updateBookTest() {
         assertEquals(ServiceStatus.ERROR_PARSING_JSON, msi.updateBook(null, null));
         assertEquals(ServiceStatus.ERROR_PARSING_JSON, msi.updateBook(null, "123"));
-        assertEquals(ServiceStatus.ERROR_BOOK_NOT_FOUND,
+        assertEquals(ServiceStatus.ERROR_ISBN_FORMAT,
                 msi.updateBook(new Book("Title", "Author", "1234567890123"), null));
         assertEquals(ServiceStatus.ERROR_ISBN_FORMAT, msi.updateBook(new Book("Title", "Author", "wrongISBN"), null));
 

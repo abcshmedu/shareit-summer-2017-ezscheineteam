@@ -7,6 +7,7 @@ import edu.hm.shareit.repository.MediaRepositoryStub;
 import edu.hm.shareit.util.MediumUtil;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * The media service handling our rest calls.
@@ -46,18 +47,12 @@ public class MediaServiceImpl implements MediaService {
     @Override
     public ServiceResult getBooks() {
         List<Book> books = mediaRepository.findAllBooks();
-        if (books.isEmpty()) {
-            return new ServiceResult(ServiceStatus.ERROR_BOOK_LIST_EMPTY);
-        }
         return new ServiceResult(ServiceStatus.OK, books.toArray(new Book[books.size()]));
     }
 
     @Override
     public ServiceResult getDiscs() {
         List<Disc> discs = mediaRepository.findAllDiscs();
-        if (discs.isEmpty()) {
-            return new ServiceResult(ServiceStatus.ERROR_DISC_LIST_EMPTY);
-        }
         return new ServiceResult(ServiceStatus.OK, discs.toArray(new Disc[discs.size()]));
     }
 
@@ -66,11 +61,12 @@ public class MediaServiceImpl implements MediaService {
         if (book == null) {
             return ServiceStatus.ERROR_PARSING_JSON;
         }
-        if (!MediumUtil.isValidISBN(book.getIsbn())) {
+        if (!MediumUtil.isValidISBN(isbn)) {
             return ServiceStatus.ERROR_ISBN_FORMAT;
         }
-
-
+        if (Objects.nonNull(book.getIsbn()) && !book.getIsbn().equals(isbn)) {
+            return ServiceStatus.ERROR_ISBN_CHANGE;
+        }
         if (!mediaRepository.updateBook(book, MediumUtil.formatISBN(isbn))) {
             return ServiceStatus.ERROR_BOOK_NOT_FOUND;
         }
@@ -83,10 +79,12 @@ public class MediaServiceImpl implements MediaService {
         if (disc == null) {
             return ServiceStatus.ERROR_PARSING_JSON;
         }
-        if (!MediumUtil.isValidBarcode(disc.getBarcode())) {
+        if (!MediumUtil.isValidBarcode(barcode)) {
             return ServiceStatus.ERROR_BARCODE_FORMAT;
         }
-
+        if (Objects.nonNull(disc.getBarcode()) && !disc.getBarcode().equals(barcode)) {
+            return ServiceStatus.ERROR_BARCODE_CHANGE;
+        }
         if (!mediaRepository.updateDisc(disc, barcode)) {
             return ServiceStatus.ERROR_DISC_NOT_FOUND;
         }

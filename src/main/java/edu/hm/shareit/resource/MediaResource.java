@@ -45,9 +45,10 @@ public class MediaResource {
     @Path("books")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getBooks() {
-        ServiceResult r = mediaService.getBooks();
-        return Response.ok()
-                .entity(r.getResult())
+        ServiceResult result = mediaService.getBooks();
+        ServiceStatus status = result.getStatus();
+        return Response.status(status.getStatus())
+                .entity(result.containsResult() ? result.getResult() : status)
                 .build();
     }
 
@@ -59,9 +60,10 @@ public class MediaResource {
     @Path("discs")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getDiscs() {
-        ServiceResult r = mediaService.getDiscs();
-        return Response.ok()
-                .entity(r.getResult())
+        ServiceResult result = mediaService.getDiscs();
+        ServiceStatus status = result.getStatus();
+        return Response.status(status.getStatus())
+                .entity(result.containsResult() ? result.getResult() : status)
                 .build();
     }
 
