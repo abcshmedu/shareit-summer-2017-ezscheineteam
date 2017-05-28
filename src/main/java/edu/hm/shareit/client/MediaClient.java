@@ -2,6 +2,7 @@ package edu.hm.shareit.client;
 
 import edu.hm.shareit.model.Book;
 import edu.hm.shareit.model.Disc;
+import edu.hm.shareit.util.AuthenticationFilter;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -9,6 +10,8 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * A Client to test our server implementation.
@@ -20,11 +23,23 @@ public class MediaClient {
     private static final String PATH_BOOKS = "books/";
     private static final String PATH_DISCS = "discs/";
 
+    private static final String TOKEN_URI = "http://auth-server-ezschein.herokuapp.com/oauth/users/authenticate";
+    private String token;
+    
     /**
      * Creates a new client.
      */
     MediaClient() {
         Client client = ClientBuilder.newClient();
+        String jsonToken = client.target(TOKEN_URI)
+                .request()
+                .post(Entity.json("{\"name\" : \"Walter White\",\"password\" : \"knockknock\"}"), String.class);
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            token =  objectMapper.readTree(jsonToken).get("token").textValue();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         target = client.target(MAIN_URI);
     }
 
@@ -34,7 +49,9 @@ public class MediaClient {
      * @return The book if found or else runtime exception.
      */
     Response getBook(String isbn) {
-        return target.path(PATH_BOOKS + isbn).request().get(Response.class);
+        return target.path(PATH_BOOKS + isbn).request()
+                .header(AuthenticationFilter.TOKEN_HEADER_FIELD, token)
+                .get(Response.class);
     }
 
     /**
@@ -43,14 +60,18 @@ public class MediaClient {
      * @return asd
      */
     Response getDisc(String barcode) {
-        return target.path(PATH_DISCS + barcode).request().get(Response.class);
+        return target.path(PATH_DISCS + barcode).request()
+                .header(AuthenticationFilter.TOKEN_HEADER_FIELD, token)
+                .get(Response.class);
     }
     /**
      * The client requests all books.
      * @return A list containing all books.
      */
     public Response getBooks() {
-        return target.path(PATH_BOOKS).request(MediaType.APPLICATION_JSON).get(Response.class);
+        return target.path(PATH_BOOKS).request(MediaType.APPLICATION_JSON)
+                .header(AuthenticationFilter.TOKEN_HEADER_FIELD, token)
+                .get(Response.class);
     }
 
     /**
@@ -58,7 +79,9 @@ public class MediaClient {
      * @return A list containing all discs.
      */
     public Response getDiscs() {
-        return target.path(PATH_DISCS).request(MediaType.APPLICATION_JSON).get(Response.class);
+        return target.path(PATH_DISCS).request(MediaType.APPLICATION_JSON)
+                .header(AuthenticationFilter.TOKEN_HEADER_FIELD, token)
+                .get(Response.class);
     }
 
     /**
@@ -69,6 +92,7 @@ public class MediaClient {
     Response createBook(Book book) {
         return target.path(PATH_BOOKS)
                 .request(MediaType.APPLICATION_JSON)
+                .header(AuthenticationFilter.TOKEN_HEADER_FIELD, token)
                 .post(Entity.entity(book, MediaType.APPLICATION_JSON));
     }
 
@@ -80,6 +104,7 @@ public class MediaClient {
     public Response updateBook(Book book) {
         return target.path(PATH_BOOKS + book.getIsbn())
                 .request(MediaType.APPLICATION_JSON)
+                .header(AuthenticationFilter.TOKEN_HEADER_FIELD, token)
                 .put(Entity.entity(book, MediaType.APPLICATION_JSON));
     }
 
@@ -91,6 +116,7 @@ public class MediaClient {
     public Response updateDisc(Disc disc) {
         return target.path(PATH_DISCS + disc.getBarcode())
                 .request(MediaType.APPLICATION_JSON)
+                .header(AuthenticationFilter.TOKEN_HEADER_FIELD, token)
                 .put(Entity.entity(disc, MediaType.APPLICATION_JSON));
     }
 
@@ -102,6 +128,7 @@ public class MediaClient {
     public Response createDisc(Disc disc) {
         return target.path(PATH_DISCS)
                 .request(MediaType.APPLICATION_JSON)
+                .header(AuthenticationFilter.TOKEN_HEADER_FIELD, token)
                 .post(Entity.entity(disc, MediaType.APPLICATION_JSON));
     }
 }

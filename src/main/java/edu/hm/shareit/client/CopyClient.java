@@ -6,6 +6,10 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import edu.hm.shareit.util.AuthenticationFilter;
+
 /**
  * Client zum Testen der CopyResource Implementation.
  */
@@ -33,16 +37,28 @@ public class CopyClient {
     
     private static final String DISC_URI = OWNER_DISCS_URI + "{barcode}";
     
+    private static final String TOKEN_URI = "http://auth-server-ezschein.herokuapp.com/oauth/users/authenticate";
+    
     private final Client client;
     
     private final WebTarget target;
 
+    private String token;
     
     /**
      * Erzeugt einen neuen Client.
      */
     public CopyClient() {
         client = ClientBuilder.newClient();
+        String jsonToken = client.target(TOKEN_URI)
+                .request()
+                .post(Entity.json("{\"name\" : \"Walter White\",\"password\" : \"knockknock\"}"), String.class);
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            token =  objectMapper.readTree(jsonToken).get("token").textValue();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         target = client.target(MAIN_URI);
     }
 
@@ -58,7 +74,9 @@ public class CopyClient {
         return target.path(BOOK_URI)
                 .resolveTemplate(OWNER_TEMPLATE, owner)
                 .resolveTemplate(ISBN_TEMPLATE, isbn)
-                .request().get();
+                .request()
+                .header(AuthenticationFilter.TOKEN_HEADER_FIELD, token)
+                .get();
     }
 
     /**
@@ -72,7 +90,9 @@ public class CopyClient {
         return target.path(DISC_URI)
                 .resolveTemplate(OWNER_TEMPLATE, owner)
                 .resolveTemplate(BARCODE_TEMPLATE, barcode)
-                .request().get();
+                .request()
+                .header(AuthenticationFilter.TOKEN_HEADER_FIELD, token)
+                .get();
     }
 
    /**
@@ -84,7 +104,9 @@ public class CopyClient {
     public Response getBookCopies(String owner) {
         return target.path(OWNER_BOOKS_URI)
                 .resolveTemplate(OWNER_TEMPLATE, owner)
-                .request().get();
+                .request()
+                .header(AuthenticationFilter.TOKEN_HEADER_FIELD, token)
+                .get();
     }
 
     /**
@@ -96,7 +118,9 @@ public class CopyClient {
     public Response getDiscCopies(String owner) {
         return target.path(OWNER_DISCS_URI)
                 .resolveTemplate(OWNER_TEMPLATE, owner)
-                .request().get();
+                .request()
+                .header(AuthenticationFilter.TOKEN_HEADER_FIELD, token)
+                .get();
     }
     
     /**
@@ -105,7 +129,9 @@ public class CopyClient {
      */
     public Response getBookCopies() {
         return target.path(BOOKS_URI)
-                .request().get();
+                .request()
+                .header(AuthenticationFilter.TOKEN_HEADER_FIELD, token)
+                .get();
     }
 
     /**
@@ -114,7 +140,9 @@ public class CopyClient {
      */
     public Response getDiscCopies() {
         return target.path(DISCS_URI)
-                .request().get();
+                .request()
+                .header(AuthenticationFilter.TOKEN_HEADER_FIELD, token)
+                .get();
     }
 
     /**
@@ -126,7 +154,9 @@ public class CopyClient {
     public Response getOwnerCopies(String owner) {
         return target.path(OWNER_URI)
                 .resolveTemplate(OWNER_TEMPLATE, owner)
-                .request().get();
+                .request()
+                .header(AuthenticationFilter.TOKEN_HEADER_FIELD, token)
+                .get();
     }
     
     /**
@@ -134,7 +164,9 @@ public class CopyClient {
      * @return Ein Response Objekt des Servers.
      */
     public Response getCopies() {
-        return target.request().get();
+        return target.request()
+                .header(AuthenticationFilter.TOKEN_HEADER_FIELD, token)
+                .get();
     }
     
     /**
@@ -143,7 +175,9 @@ public class CopyClient {
      * @return Ein Response Objekt des Servers.
      */
     public Response createCopy(String json) {
-        return target.request().post(Entity.json(json));
+        return target.request()
+                .header(AuthenticationFilter.TOKEN_HEADER_FIELD, token)
+                .post(Entity.json(json));
     }
     
     /**
@@ -159,7 +193,9 @@ public class CopyClient {
         return target.path(BOOK_URI)
                 .resolveTemplate(OWNER_TEMPLATE, owner)
                 .resolveTemplate(ISBN_TEMPLATE, isbn)
-                .request().put(Entity.json(json));
+                .request()
+                .header(AuthenticationFilter.TOKEN_HEADER_FIELD, token)
+                .put(Entity.json(json));
     }
 
     /**
@@ -175,7 +211,9 @@ public class CopyClient {
         return target.path(DISC_URI)
                 .resolveTemplate(OWNER_TEMPLATE, owner)
                 .resolveTemplate(BARCODE_TEMPLATE, barcode)
-                .request().put(Entity.json(json));
+                .request()
+                .header(AuthenticationFilter.TOKEN_HEADER_FIELD, token)
+                .put(Entity.json(json));
     }
 
     /**
@@ -190,7 +228,9 @@ public class CopyClient {
         return target.path(BOOK_URI)
                 .resolveTemplate(OWNER_TEMPLATE, owner)
                 .resolveTemplate(ISBN_TEMPLATE, isbn)
-                .request().delete();
+                .request()
+                .header(AuthenticationFilter.TOKEN_HEADER_FIELD, token)
+                .delete();
     }
 
     /**
@@ -205,6 +245,8 @@ public class CopyClient {
         return target.path(DISC_URI)
                 .resolveTemplate(OWNER_TEMPLATE, owner)
                 .resolveTemplate(BARCODE_TEMPLATE, barcode)
-                .request().delete();
+                .request()
+                .header(AuthenticationFilter.TOKEN_HEADER_FIELD, token)
+                .delete();
     }
 }

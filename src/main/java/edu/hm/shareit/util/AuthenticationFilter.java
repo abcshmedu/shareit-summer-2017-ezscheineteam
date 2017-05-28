@@ -10,7 +10,7 @@ import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.ext.Provider;
 
 import edu.hm.shareit.business.ServiceStatus;
-import edu.hm.shareit.model.User;
+import edu.hm.shareit.model.Token;
 
 
 /**
@@ -22,11 +22,11 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
 
     private static final String TOKEN_TEMPLATE = "token";
 
-    private static final String TOKEN_HEADER_FIELD = "UserToken";
+    public static final String TOKEN_HEADER_FIELD = "UserToken";
 
-    public static final String USER_DATA_PROP = "CurrentUserData";
+    public static final String TOKEN_PROP = "CurrentTokenData";
 
-    private static final String MAIN_URI = "http://localhost:8080/oauth/";
+    private static final String MAIN_URI = "http://auth-server-ezschein.herokuapp.com/oauth/";
     
     private static final String CHECK_URI = "check/{token}";
     
@@ -39,14 +39,14 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
                     .entity(ServiceStatus.ERROR_UNAUTHORIZED)
                     .build());
         } else {
-            User currentUser = validateToken(token);
-            if (currentUser == null) {
+            Token currentToken = validateToken(token);
+            if (currentToken == null) {
                 requestContext.abortWith(Response
                         .status(ServiceStatus.ERROR_TOKEN_NOT_VALID.getStatus())
                         .entity(ServiceStatus.ERROR_TOKEN_NOT_VALID)
                         .build());
             } else {
-                requestContext.setProperty(USER_DATA_PROP, currentUser);
+                requestContext.setProperty(TOKEN_PROP, currentToken);
             }
         }
     }
@@ -56,9 +56,9 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
      * Ueberprueft ob ein token gueltig ist indem 
      * dieses an den Auth Server gesendet wird.
      * @param token Das Tokem
-     * @return Ein User Objekt falls das token gueltig ist, sonst null.
+     * @return Ein Token Objekt falls das token gueltig ist, sonst null.
      */
-    private User validateToken(String token) {
+    private Token validateToken(String token) {
         try {
             Response response = ClientBuilder.newClient()
                     .target(MAIN_URI)
@@ -66,7 +66,7 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
                     .resolveTemplate(TOKEN_TEMPLATE, token)
                     .request().get();
             if (response.getStatus() == Status.OK.getStatusCode()) {
-                return response.readEntity(User.class);
+                return response.readEntity(Token.class);
             }
         } catch (ProcessingException processingException) {
             processingException.printStackTrace();
