@@ -27,6 +27,14 @@ public class Medium {
         return title;
     }
 
+    /**
+     * Set a new title.
+     * @param title the new title to be set.
+     */
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

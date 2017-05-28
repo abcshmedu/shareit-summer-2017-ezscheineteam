@@ -16,6 +16,22 @@ public class Disc extends Medium {
     }
 
     /**
+     * Sets a new director for the disc.
+     * @param director the new director
+     */
+    public void setDirector(String director) {
+        this.director = director;
+    }
+
+    /**
+     * Sets a new fsk value.
+     * @param fsk the new fsk value.
+     */
+    public void setFsk(int fsk) {
+        this.fsk = fsk;
+    }
+
+    /**
      * Creates a new disc.
      * @param title - the title of the disc.
      * @param barcode - the barcode of the disc.
