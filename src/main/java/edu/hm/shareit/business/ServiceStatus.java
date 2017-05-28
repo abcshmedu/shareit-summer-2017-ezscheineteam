@@ -23,6 +23,8 @@ public enum ServiceStatus {
     ERROR_DISC_LIST_EMPTY(Response.Status.NOT_FOUND, "Die Disc-Liste ist leer."),
     ERROR_ISBN_ALREADY_EXIST(Response.Status.BAD_REQUEST, "Ein Buch mit dieser ISBN existiert bereits."),
     ERROR_BARCODE_ALREADY_EXIST(Response.Status.BAD_REQUEST, "Eine Disc mit diesem Barcode existiert bereits."),
+    ERROR_AUTHOR_AND_TITLE_MISSING(Response.Status.BAD_REQUEST, "Die Felder Author und Title wurden nicht angegeben"),
+    ERROR_DIRECTOR_BARCODE_AND_FSK_MISSING(Response.Status.BAD_REQUEST, "Die Felder Director, Barcode und FSK wurden nicht angegeben."),
     ERROR_TOKEN_NOT_VALID(Response.Status.UNAUTHORIZED, "Das gesendete Zugriffstoken ist nicht gültig."),
     ERROR_UNAUTHORIZED(Response.Status.UNAUTHORIZED, "Es wird ein Zugriffstoken benötigt welcher sich im Http Header unter den Namen UserToken befinden muss.");
 

@@ -52,18 +52,16 @@ public interface MediaRepository {
     /**
      * Updates an existing book in the repository.
      * @param book - book with updated information.
-     * @param isbn - the isbn of an existing book.
      * @return true, if update successful, false otherwise.
      */
-    boolean updateBook(Book book, String isbn);
+    boolean updateBook(Book book);
 
 
     /**
      * Updates an existing disc in the repository.
      * @param disc - disc with updated information.
-     * @param barcode - the barcode of an existing disc in the repo.
      * @return true, if update successful, false otherwise.
      */
-    boolean updateDisc(Disc disc, String barcode);
+    boolean updateDisc(Disc disc);
 
 }

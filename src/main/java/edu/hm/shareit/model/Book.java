@@ -79,6 +79,14 @@ public class Book extends Medium {
         this.isbn = isbn;
     }
 
+    /**
+     * Sets the Author of the book.
+     * @param author the new author
+     */
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
     @Override
     public int hashCode() {
         int result = super.hashCode();

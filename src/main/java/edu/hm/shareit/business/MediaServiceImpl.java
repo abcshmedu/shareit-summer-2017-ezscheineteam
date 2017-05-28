@@ -64,10 +64,11 @@ public class MediaServiceImpl implements MediaService {
         if (!MediumUtil.isValidISBN(isbn)) {
             return ServiceStatus.ERROR_ISBN_FORMAT;
         }
-        if (Objects.nonNull(book.getIsbn()) && !book.getIsbn().equals(isbn)) {
-            return ServiceStatus.ERROR_ISBN_CHANGE;
+        if (book.getAuthor() == null && book.getTitle().isEmpty()) {
+           return ServiceStatus.ERROR_AUTHOR_AND_TITLE_MISSING;
         }
-        if (!mediaRepository.updateBook(book, MediumUtil.formatISBN(isbn))) {
+        book.setIsbn(MediumUtil.formatISBN(isbn));
+        if (!mediaRepository.updateBook(book)) {
             return ServiceStatus.ERROR_BOOK_NOT_FOUND;
         }
 
@@ -82,10 +83,13 @@ public class MediaServiceImpl implements MediaService {
         if (!MediumUtil.isValidBarcode(barcode)) {
             return ServiceStatus.ERROR_BARCODE_FORMAT;
         }
+        if (disc.getDirector() == null || disc.getTitle() == null) {
+            return ServiceStatus.ERROR_DIRECTOR_BARCODE_AND_FSK_MISSING;
+        }
         if (Objects.nonNull(disc.getBarcode()) && !disc.getBarcode().equals(barcode)) {
             return ServiceStatus.ERROR_BARCODE_CHANGE;
         }
-        if (!mediaRepository.updateDisc(disc, barcode)) {
+        if (!mediaRepository.updateDisc(disc)) {
             return ServiceStatus.ERROR_DISC_NOT_FOUND;
         }
         return ServiceStatus.OK;
@@ -96,7 +100,7 @@ public class MediaServiceImpl implements MediaService {
         if (!MediumUtil.isValidISBN(isbn)) {
             return new ServiceResult(ServiceStatus.ERROR_ISBN_FORMAT);
         }
-        Book b = mediaRepository.findBook(isbn);
+        Book b = mediaRepository.findBook(MediumUtil.formatISBN(isbn));
         if (b == null) {
             return new ServiceResult(ServiceStatus.ERROR_BOOK_NOT_FOUND);
         }

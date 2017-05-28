@@ -2,6 +2,7 @@ package edu.hm.shareit.repository;
 
 import edu.hm.shareit.model.Book;
 import edu.hm.shareit.model.Disc;
+import edu.hm.shareit.util.MediumUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,41 +27,62 @@ public class MediaRepositoryStub implements MediaRepository {
     }
 
     @Override
-    public boolean updateDisc(Disc disc, String barcode) {
+    public boolean updateDisc(Disc disc) {
         int index = -1;
         for (Disc d : allDiscs) {
-            if (d.getBarcode().equals(barcode)) {
+            if (d.getBarcode().equals(disc.getBarcode())) {
                 index = allDiscs.indexOf(d);
                 break;
             }
         }
         if (index == -1) {
+            if (MediumUtil.isValidDisc(disc)) {
+                allDiscs.add(disc);
+                return true;
+            }
             return false;
         }
-        allDiscs.set(index, disc);
-        return true;
+        else {
+            Disc found = allDiscs.get(index);
+            if (disc.getDirector() != null) {
+                found.setDirector(disc.getDirector());
+            }
+
+            return true;
+        }
     }
 
     @Override
-    public boolean updateBook(Book book, String isbn) {
-        // search the database to see if we have a book with that isbn already
-        // select * from Books where isbn = ?
-        // if rs size == 0
-        // insert into book table
-        // else
-        // update the Book
+    public boolean updateBook(Book book) {
         int index = -1;
         for (Book b : allBooks) {
-            if (b.getIsbn().equals(isbn)) {
+            if (b.getIsbn().equals(book.getIsbn())) {
                 index = allBooks.indexOf(b);
                 break;
             }
         }
+
+        // Book not found
         if (index == -1) {
+            if (MediumUtil.isValidBook(book)) {
+                allBooks.add(book);
+                return true;
+            }
             return false;
         }
-        allBooks.set(index, book);
-        return true;
+        // Book found
+        else {
+            Book found = allBooks.get(index);
+            if (book.getAuthor() != null) {
+                found.setAuthor(book.getAuthor());
+            }
+
+            if (book.getTitle() != null) {
+                found.setTitle(book.getTitle());
+            }
+
+            return true;
+        }
     }
 
     @Override

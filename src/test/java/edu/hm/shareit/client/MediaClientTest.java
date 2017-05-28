@@ -12,7 +12,7 @@ import static org.junit.Assert.assertEquals;
 
 @SuppressWarnings({"JavadocType", "JavadocMethod"})
 public class MediaClientTest {
-    
+
     @Test
     public void testOnStartNoBooks() {
         MediaClient client = new MediaClient();
@@ -59,7 +59,7 @@ public class MediaClientTest {
     @Test
     public void testCreateBook() {
         MediaClient client = new MediaClient();
-        Book book = new Book("TestBook", "AutoTestBook", "1234567892");
+        Book book = new Book("TestBook", "AutoTestBook", "1234567893");
         Response r = client.createBook(book);
         String entity = r.readEntity(String.class);
         String asserted = "{\"status\":200,\"detail\":\"Tutto bene.\"}";
@@ -70,7 +70,7 @@ public class MediaClientTest {
     @Test
     public void testCreateDisc() {
         MediaClient client = new MediaClient();
-        Disc disc = new Disc("TestDisc", "56712345", 0, "TestAutor");
+        Disc disc = new Disc("TestDisc", "56712341", 0, "TestAutor");
         Response r = client.createDisc(disc);
         String entity = r.readEntity(String.class);
         String asserted = "{\"status\":200,\"detail\":\"Tutto bene.\"}";

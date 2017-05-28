@@ -1,5 +1,8 @@
 package edu.hm.shareit.util;
 
+import edu.hm.shareit.model.Book;
+import edu.hm.shareit.model.Disc;
+
 import java.util.regex.Pattern;
 
 /**
@@ -64,6 +67,24 @@ public final class MediumUtil {
     }
 
     /**
+     * Checks if a book contains non null attributes.
+     * @param book the book to be checked.
+     * @return false, if one or more attributes are null.
+     */
+    public static boolean isValidBook(Book book) {
+        return book.getTitle() != null && book.getAuthor() != null && book.getIsbn() != null;
+    }
+
+    /**
+     * Checks if a disc contains non null attributes.
+     * @param disc the disc to be checked.
+     * @return false, if one ore more attributes are null.
+     */
+    public static boolean isValidDisc(Disc disc) {
+        return disc.getTitle() != null && disc.getDirector() != null && disc.getBarcode() != null;
+    }
+
+    /**
      * Checks if barcode is in a valid EAN8 or EAN13 Format.
      * 
      * @param barcode
@@ -75,4 +96,5 @@ public final class MediumUtil {
         Pattern p = Pattern.compile(regex);
         return p.matcher(barcode).matches();
     }
+
 }
