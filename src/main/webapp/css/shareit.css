@@ -57,3 +57,24 @@ footer {
     line-height: 60px;
     margin-top: 20px;
 }
+.navbar-nav {
+    padding: 10px;
+}
+.navbar-nav  li a {
+    text-decoration: none;
+    padding: 5px 25px;
+    border: grey 2px solid;
+    font-weight:bolder;
+    text-transform: uppercase;
+}
+
+.navbar-nav li a:hover {
+    background: #cf3046!important;
+    border: white 2px solid;
+    transition: all 0.25s ease-in; /* explorer 10 */
+    -webkit-transition: all 0.25s ease-in; /* chrome & safari */
+    -moz-transition: all 0.25s ease-in; /* firefox */
+    -o-transition: all 0.25s ease-in; /* opera */
+}
+
+
