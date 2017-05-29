@@ -1,7 +1,9 @@
 # 2. Pratkikumsaufgabe Software-Architektur Sommer 2017
 Heroku Deployment:
 -
-Link: [ShareIt](https://arcane-wave-21354.herokuapp.com/)
+Link: [ShareIt](https://shareit-ezscheine.herokuapp.com/)
+
+Link: [OAuth](https://auth-server-ezschein.herokuapp.com/)
 
 REST-API Interface Dokumentation:
 -
@@ -12,11 +14,11 @@ URI|Methode|Beschreibung
 /media/books|POST|Neues Medium Buch anlegen
 /media/books{isbn}|GET|Eine JSON-Repryaesentation eines gespeicherten Buches liefern, falls vorhanden
 /media/books|GET|Alle Buecher auflisten
-/media/books/{isbn}|PUT|Daten zu vorhandenem Buch modifizieren (JSON-Daten enthalten nur die zu modifizierenden Attribute)
+/media/books/{isbn}|PUT|Daten zu vorhandenem Buch modifizieren (JSON-Daten enthalten nur die zu modifizierenden Attribute). Ist das Buch(ISBN) nicht enthalten, wird das Buch erstellt, wenn alle Attribute angegeben wurden.
 /media/discs|POST|Neues Medium Disc anlegen
 /media/discs|GET|Alle Discs auflisten
 /media/discs/{barcode}|GET|Eine JSON-Repraesentation einer gespeicherten Disc liefern, falls vorhanden
-/media/discs/{barcode}|PUT|Daten zur vorhandenen Disc modifizieren (JSON-Daten enthalten nur die zu modifizierenden Attribute)
+/media/discs/{barcode}|PUT|Daten zur vorhandenen Disc modifizieren (JSON-Daten enthalten nur die zu modifizierenden Attribute). Ist die Disc(Barcode) nicht enthalten wird sie erstellt, wenn alle Attribute angegeben wurde.
 /copy|POST|Neues Exemplar anlegen
 /copy|GET|Alle Exemplare auflisten
 /copy/books|GET|Alle Buch Exemplare auflisten
