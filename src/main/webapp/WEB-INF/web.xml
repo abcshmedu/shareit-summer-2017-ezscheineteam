@@ -8,6 +8,9 @@
 		<welcome-file>index.html</welcome-file>
 	</welcome-file-list>
  
+    <listener>
+       <listener-class>edu.hm.shareit.util.ShareitServletContextListener</listener-class>
+     </listener>
      <servlet>
       <servlet-name>Jersey Web Application</servlet-name>
 		<servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
