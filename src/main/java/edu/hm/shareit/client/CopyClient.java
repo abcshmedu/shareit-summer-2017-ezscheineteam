@@ -52,7 +52,7 @@ public class CopyClient {
         client = ClientBuilder.newClient();
         String jsonToken = client.target(TOKEN_URI)
                 .request()
-                .post(Entity.json("{\"name\" : \"Walter White\",\"password\" : \"knockknock\"}"), String.class);
+                .post(Entity.json("{\"name\" : \"WalterWhite\",\"password\" : \"knockknock\"}"), String.class);
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             token =  objectMapper.readTree(jsonToken).get("token").textValue();
