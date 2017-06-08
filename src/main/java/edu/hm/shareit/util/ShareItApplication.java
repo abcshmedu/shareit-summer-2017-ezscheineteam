@@ -2,6 +2,8 @@ package edu.hm.shareit.util;
 
 import javax.inject.Inject;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.glassfish.hk2.api.ServiceLocator;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.jvnet.hk2.guice.bridge.api.GuiceBridge;
@@ -17,6 +19,8 @@ import com.google.inject.Module;
  */
 public class ShareItApplication extends ResourceConfig {
 
+    public static final Logger LOGGER = LogManager.getLogger();
+    
     /**
      * init app config.
      * @param serviceLocator serviceLocator
