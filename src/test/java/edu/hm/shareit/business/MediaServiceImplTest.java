@@ -5,23 +5,21 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-
 import edu.hm.shareit.model.Book;
 import edu.hm.shareit.model.Disc;
-import edu.hm.shareit.util.ShareItApplicationModule;
+import edu.hm.shareit.repository.MediaRepository;
+import edu.hm.shareit.repository.MediaRepositoryStub;
 
 @SuppressWarnings({"JavadocType", "JavadocMethod"})
 public class MediaServiceImplTest {
 
-    private MediaServiceImpl msi;
+    private MediaService msi;
 
     
     @Before
     public void setUp() {
-        Injector injector = Guice.createInjector(new ShareItApplicationModule());       
-        msi = injector.getInstance(MediaServiceImpl.class);
+        MediaRepository repository = new MediaRepositoryStub();
+        msi = new MediaServiceImpl(repository);
     }
 
     

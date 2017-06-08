@@ -15,8 +15,16 @@ import javax.inject.Inject;
  */
 public class MediaServiceImpl implements MediaService {
     
+    private final MediaRepository mediaRepository;
+    
+    /**
+     * Erzeugt ein neues MediaServiceImpl Objekt.
+     * @param mediaRepository Media Repository welcher verwendet werden soll.
+     */
     @Inject
-    private MediaRepository mediaRepository;
+    public MediaServiceImpl(MediaRepository mediaRepository) {
+        this.mediaRepository = mediaRepository;
+    }
 
     @Override
     public ServiceStatus addBook(Book book) {

@@ -16,9 +16,17 @@ import javax.ws.rs.core.Response;
  */
 @Path("media")
 public class MediaResource {
+        
+    private final MediaService mediaService;
     
+    /**
+     * Erzeugt ein neues MediaResource Objekt.
+     * @param mediaService Media Service welcher verwendet werden soll.
+     */
     @Inject
-    private MediaService mediaService;
+    public MediaResource(MediaService mediaService) {
+        this.mediaService = mediaService;
+    }
 
     /**
      * Gibt das Buch zur passenden ISBN zurück.

@@ -27,9 +27,16 @@ public class CopyResource {
     /**
      * Service zur Handhabung von Exemplaren.
      */
-    @Inject
-    private CopyService copyService;
+    private final CopyService copyService;
 
+    /**
+     * Erzeugt ein neues CopyResource Objekt.
+     * @param copyService Copy Service welcher verwendet werden soll.
+     */
+    @Inject
+    public CopyResource(CopyService copyService) {
+        this.copyService = copyService;
+    }
     
     /**
      * Legt ein neues Exemplar an.
