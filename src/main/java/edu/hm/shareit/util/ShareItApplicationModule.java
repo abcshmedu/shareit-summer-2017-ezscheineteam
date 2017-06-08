@@ -19,6 +19,7 @@ public class ShareItApplicationModule extends AbstractModule {
         bind(MediaService.class).to(MediaServiceImpl.class);
         bind(MediaRepository.class).to(MediaRepositoryStub.class);
         bind(CopyService.class).to(CopyServiceImplStub.class);
+        bind(TokenHandler.class).to(AuthServToken.class);
     }
 
 }

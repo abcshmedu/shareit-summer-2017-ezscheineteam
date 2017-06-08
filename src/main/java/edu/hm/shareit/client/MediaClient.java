@@ -1,8 +1,8 @@
 package edu.hm.shareit.client;
 
+import edu.hm.shareit.filter.AuthenticationFilter;
 import edu.hm.shareit.model.Book;
 import edu.hm.shareit.model.Disc;
-import edu.hm.shareit.util.AuthenticationFilter;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;

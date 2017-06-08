@@ -1,16 +1,15 @@
-package edu.hm.shareit.util;
+package edu.hm.shareit.filter;
 
 import java.io.IOException;
 
-import javax.ws.rs.ProcessingException;
-import javax.ws.rs.client.ClientBuilder;
+import javax.inject.Inject;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.ext.Provider;
 
 import edu.hm.shareit.business.ServiceStatus;
 import edu.hm.shareit.model.Token;
+import edu.hm.shareit.util.TokenHandler;
 
 
 /**
@@ -20,15 +19,20 @@ import edu.hm.shareit.model.Token;
 @Provider
 public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequestFilter {
 
-    private static final String TOKEN_TEMPLATE = "token";
-
     public static final String TOKEN_HEADER_FIELD = "UserToken";
 
     public static final String TOKEN_PROP = "CurrentTokenData";
-
-    private static final String MAIN_URI = "http://auth-server-ezschein.herokuapp.com/oauth/";
     
-    private static final String CHECK_URI = "check/{token}";
+    private final TokenHandler tokenHandler;
+    
+    /**
+     * Erzeugt ein neues AuthenticationFilter Objekt.
+     * @param tokenHandler Token Handler welcher verwendet werden soll.
+     */
+    @Inject
+    public AuthenticationFilter(TokenHandler tokenHandler) {
+        this.tokenHandler = tokenHandler;
+    }
     
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
@@ -39,7 +43,7 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
                     .entity(ServiceStatus.ERROR_UNAUTHORIZED)
                     .build());
         } else {
-            Token currentToken = validateToken(token);
+            Token currentToken = tokenHandler.validateToken(token);
             if (currentToken == null) {
                 requestContext.abortWith(Response
                         .status(ServiceStatus.ERROR_TOKEN_NOT_VALID.getStatus())
@@ -50,28 +54,4 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
             }
         }
     }
-
-
-    /**
-     * Ueberprueft ob ein token gueltig ist indem 
-     * dieses an den Auth Server gesendet wird.
-     * @param token Das Tokem
-     * @return Ein Token Objekt falls das token gueltig ist, sonst null.
-     */
-    private Token validateToken(String token) {
-        try {
-            Response response = ClientBuilder.newClient()
-                    .target(MAIN_URI)
-                    .path(CHECK_URI)
-                    .resolveTemplate(TOKEN_TEMPLATE, token)
-                    .request().get();
-            if (response.getStatus() == Status.OK.getStatusCode()) {
-                return response.readEntity(Token.class);
-            }
-        } catch (ProcessingException processingException) {
-            processingException.printStackTrace();
-        }
-        return null;
-    }
-
 }

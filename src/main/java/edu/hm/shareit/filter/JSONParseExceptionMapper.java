@@ -1,4 +1,4 @@
-package edu.hm.shareit.util;
+package edu.hm.shareit.filter;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import edu.hm.shareit.business.ServiceStatus;

@@ -8,7 +8,7 @@ import javax.ws.rs.core.Response;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import edu.hm.shareit.util.AuthenticationFilter;
+import edu.hm.shareit.filter.AuthenticationFilter;
 
 /**
  * Client zum Testen der CopyResource Implementation.
