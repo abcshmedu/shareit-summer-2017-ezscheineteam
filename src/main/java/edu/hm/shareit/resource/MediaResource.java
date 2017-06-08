@@ -1,12 +1,12 @@
 package edu.hm.shareit.resource;
 
 import edu.hm.shareit.business.MediaService;
-import edu.hm.shareit.business.MediaServiceImpl;
 import edu.hm.shareit.business.ServiceResult;
 import edu.hm.shareit.business.ServiceStatus;
 import edu.hm.shareit.model.Book;
 import edu.hm.shareit.model.Disc;
 
+import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -16,7 +16,9 @@ import javax.ws.rs.core.Response;
  */
 @Path("media")
 public class MediaResource {
-    private MediaService mediaService = new MediaServiceImpl();
+    
+    @Inject
+    private MediaService mediaService;
 
     /**
      * Gibt das Buch zur passenden ISBN zurück.

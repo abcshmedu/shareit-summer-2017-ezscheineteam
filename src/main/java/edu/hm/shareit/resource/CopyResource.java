@@ -11,8 +11,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import javax.inject.Inject;
+
 import edu.hm.shareit.business.CopyService;
-import edu.hm.shareit.business.CopyServiceImplStub;
 import edu.hm.shareit.business.ServiceResult;
 import edu.hm.shareit.business.ServiceStatus;
 import edu.hm.shareit.model.Copy;
@@ -26,7 +27,8 @@ public class CopyResource {
     /**
      * Service zur Handhabung von Exemplaren.
      */
-    private final CopyService copyService = new CopyServiceImplStub();
+    @Inject
+    private CopyService copyService;
 
     
     /**

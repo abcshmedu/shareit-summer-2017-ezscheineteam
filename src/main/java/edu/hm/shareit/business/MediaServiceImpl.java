@@ -3,17 +3,20 @@ package edu.hm.shareit.business;
 import edu.hm.shareit.model.Book;
 import edu.hm.shareit.model.Disc;
 import edu.hm.shareit.repository.MediaRepository;
-import edu.hm.shareit.repository.MediaRepositoryStub;
 import edu.hm.shareit.util.MediumUtil;
 
 import java.util.List;
 import java.util.Objects;
 
+import javax.inject.Inject;
+
 /**
  * The media service handling our rest calls.
  */
 public class MediaServiceImpl implements MediaService {
-    private MediaRepository mediaRepository = new MediaRepositoryStub();
+    
+    @Inject
+    private MediaRepository mediaRepository;
 
     @Override
     public ServiceStatus addBook(Book book) {
