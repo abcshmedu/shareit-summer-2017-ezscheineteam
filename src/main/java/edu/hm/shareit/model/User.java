@@ -14,7 +14,7 @@ public final class User {
     /**
      * Empty user object not allowed, hidden empty default constructor.
      */
-    private User() {
+    public User() {
     }
 
     /**
@@ -63,4 +63,43 @@ public final class User {
         return group;
     }
 
+    /**
+     * Set a new name.
+     * @param name the new name
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * Set a new ID.
+     * @param iD the new id
+     */
+    public void setiD(int iD) {
+        this.iD = iD;
+    }
+
+    /**
+     * Set if active or not.
+     * @param active true, if active else otherwise
+     */
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    /**
+     * Set a new email.
+     * @param email the new email
+     */
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    /**
+     * Set a new user group.
+     * @param group the new user group.
+     */
+    public void setGroup(UserGroup group) {
+        this.group = group;
+    }
 }

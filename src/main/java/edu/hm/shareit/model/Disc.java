@@ -6,13 +6,21 @@ package edu.hm.shareit.model;
 public class Disc extends Medium {
     private String barcode;
     private String director;
-    private int fsk;
+    private int fsk = -1;
 
     /**
      * Creates a new Disc.
      */
     public Disc() {
         super("");
+    }
+
+    /**
+     * Sets a new barcode.
+     * @param barcode the new barcode
+     */
+    public void setBarcode(String barcode) {
+        this.barcode = barcode;
     }
 
     /**

@@ -5,10 +5,8 @@ import edu.hm.shareit.model.Disc;
 import edu.hm.shareit.repository.MediaRepository;
 import edu.hm.shareit.util.MediumUtil;
 
-import java.util.List;
-import java.util.Objects;
-
 import javax.inject.Inject;
+import java.util.List;
 
 /**
  * The media service handling our rest calls.
@@ -94,12 +92,10 @@ public class MediaServiceImpl implements MediaService {
         if (!MediumUtil.isValidBarcode(barcode)) {
             return ServiceStatus.ERROR_BARCODE_FORMAT;
         }
-        if (disc.getDirector() == null || disc.getTitle() == null) {
+        if (disc.getDirector() == null && disc.getTitle() == null) {
             return ServiceStatus.ERROR_DIRECTOR_BARCODE_AND_FSK_MISSING;
         }
-        if (Objects.nonNull(disc.getBarcode()) && !disc.getBarcode().equals(barcode)) {
-            return ServiceStatus.ERROR_BARCODE_CHANGE;
-        }
+        disc.setBarcode(barcode);
         if (!mediaRepository.updateDisc(disc)) {
             return ServiceStatus.ERROR_DISC_NOT_FOUND;
         }
