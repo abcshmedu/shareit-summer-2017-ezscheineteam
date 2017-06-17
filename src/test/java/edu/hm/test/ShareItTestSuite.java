@@ -7,6 +7,7 @@ import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
+import edu.hm.shareit.ShareItTest;
 import edu.hm.shareit.business.MediaServiceImplTest;
 import edu.hm.shareit.client.MediaClientTest;
 import edu.hm.shareit.model.BookTest;
@@ -21,7 +22,8 @@ import edu.hm.shareit.util.MediumUtilTest;
 @RunWith(Suite.class)
 //CHECKSTYLE:ON:
 @Suite.SuiteClasses({ BookTest.class, CopyTest.class, DiscTest.class, MediumTest.class, MediaClientTest.class,
-        CopyResourceTest.class, MediaResourceTest.class, MediumUtilTest.class, MediaServiceImplTest.class })
+        CopyResourceTest.class, MediaResourceTest.class, MediumUtilTest.class, MediaServiceImplTest.class,
+        ShareItTest.class})
 @SuppressWarnings("JavadocMethod")
 public class ShareItTestSuite {
 

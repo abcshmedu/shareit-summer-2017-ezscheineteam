@@ -6,9 +6,8 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import edu.hm.shareit.filter.AuthenticationFilter;
+import edu.hm.shareit.util.AuthServToken;
 
 /**
  * Client zum Testen der CopyResource Implementation.
@@ -37,29 +36,20 @@ public class CopyClient {
     
     private static final String DISC_URI = OWNER_DISCS_URI + "{barcode}";
     
-    private static final String TOKEN_URI = "http://auth-server-ezschein.herokuapp.com/oauth/users/authenticate";
-    
     private final Client client;
     
     private final WebTarget target;
 
-    private String token;
+    private final String token;
     
     /**
      * Erzeugt einen neuen Client.
      */
     public CopyClient() {
         client = ClientBuilder.newClient();
-        String jsonToken = client.target(TOKEN_URI)
-                .request()
-                .post(Entity.json("{\"name\" : \"WalterWhite\",\"password\" : \"knockknock\"}"), String.class);
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            token =  objectMapper.readTree(jsonToken).get("token").textValue();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         target = client.target(MAIN_URI);
+        AuthServToken authServToken = new AuthServToken();
+        token = authServToken.getToken("WalterWhite", "knockknock");
     }
 
 

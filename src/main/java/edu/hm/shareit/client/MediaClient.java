@@ -3,6 +3,7 @@ package edu.hm.shareit.client;
 import edu.hm.shareit.filter.AuthenticationFilter;
 import edu.hm.shareit.model.Book;
 import edu.hm.shareit.model.Disc;
+import edu.hm.shareit.util.AuthServToken;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -11,36 +12,26 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 /**
  * A Client to test our server implementation.
  */
 public class MediaClient {
-    private WebTarget target;
 
     private static final String MAIN_URI = "http://localhost:8080/shareit/media/";
     private static final String PATH_BOOKS = "books/";
     private static final String PATH_DISCS = "discs/";
 
-    private static final String TOKEN_URI = "http://auth-server-ezschein.herokuapp.com/oauth/users/authenticate";
-    private String token;
+    private final WebTarget target;
+    private final String token;
     
     /**
      * Creates a new client.
      */
     MediaClient() {
         Client client = ClientBuilder.newClient();
-        String jsonToken = client.target(TOKEN_URI)
-                .request()
-                .post(Entity.json("{\"name\" : \"WalterWhite\",\"password\" : \"knockknock\"}"), String.class);
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            token =  objectMapper.readTree(jsonToken).get("token").textValue();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         target = client.target(MAIN_URI);
+        AuthServToken authServToken = new AuthServToken();
+        token = authServToken.getToken("WalterWhite", "knockknock");
     }
 
     /**
