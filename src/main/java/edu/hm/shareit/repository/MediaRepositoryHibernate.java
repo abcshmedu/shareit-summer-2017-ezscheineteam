@@ -2,10 +2,10 @@ package edu.hm.shareit.repository;
 
 import edu.hm.shareit.model.Book;
 import edu.hm.shareit.model.Disc;
-import edu.hm.shareit.util.HibernateUtilities;
 import edu.hm.shareit.util.MediumUtil;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
@@ -15,19 +15,25 @@ import java.util.List;
 /**
  * La real repository.
  */
+@SuppressWarnings({"unchecked", "rawtypes"})
 public class MediaRepositoryHibernate implements MediaRepository {
+    
+    private final SessionFactory factory;
+    
     /**
      * Erzeugt ein neues MediaRepositoryHibernate Objekt.
+-     * @param factory SessionFactory welcher verwendet werden soll.
      */
     @Inject
-    public MediaRepositoryHibernate() {
+     public MediaRepositoryHibernate(SessionFactory factory) {
+         this.factory = factory;
     }
 
     @Override
     public List<Book> findAllBooks() {
         List<Book> books = null;
         Transaction tx = null;
-        try (Session session = HibernateUtilities.getSessionFactory().openSession()) {
+        try (Session session = factory.openSession()) {
             tx = session.beginTransaction();
             Query query = session.createQuery("from Book");
             books = query.list();
@@ -45,7 +51,7 @@ public class MediaRepositoryHibernate implements MediaRepository {
     public List<Disc> findAllDiscs() {
         List<Disc> discs = null;
         Transaction tx = null;
-        try (Session session = HibernateUtilities.getSessionFactory().openSession()) {
+        try (Session session = factory.openSession()) {
             tx = session.beginTransaction();
             Query query = session.createQuery("from Disc");
             discs = query.list();
@@ -63,7 +69,7 @@ public class MediaRepositoryHibernate implements MediaRepository {
     public Book findBook(String isbn) {
         Book book = null;
         Transaction tx = null;
-        try (Session session = HibernateUtilities.getSessionFactory().openSession()) {
+        try (Session session = factory.openSession()) {
             tx = session.beginTransaction();
             Query query = session.createQuery("from Book where isbn='" + isbn + "'");
             List<Book> books = query.list();
@@ -85,9 +91,9 @@ public class MediaRepositoryHibernate implements MediaRepository {
     public Disc findDisc(String barcode) {
         Disc disc = null;
         Transaction tx = null;
-        Session session = HibernateUtilities.getSessionFactory().openSession();
+        Session session = factory.openSession();
         try {
-            tx = session.beginTransaction();
+            tx = session.beginTransaction();            
             Query query = session.createQuery("from Disc where barcode='" + barcode + "'");
             List<Disc> discs = query.list();
             if (discs.size() == 1) {
@@ -119,7 +125,7 @@ public class MediaRepositoryHibernate implements MediaRepository {
      */
     private void save(Object obj) {
         Transaction tx = null;
-        Session session = HibernateUtilities.getSessionFactory().openSession();
+        Session session = factory.openSession();
         try {
             tx = session.beginTransaction();
             session.save(obj);
@@ -147,7 +153,7 @@ public class MediaRepositoryHibernate implements MediaRepository {
     public boolean updateBook(Book book) {
         Book b = null;
         Transaction tx = null;
-        try (Session session = HibernateUtilities.getSessionFactory().openSession()) {
+        try (Session session = factory.openSession()) {
             tx = session.beginTransaction();
             Query query = session.createQuery("from Book where isbn='" + book.getIsbn() + "'");
             List<Book> books = query.list();
@@ -187,7 +193,7 @@ public class MediaRepositoryHibernate implements MediaRepository {
     public boolean updateDisc(Disc disc) {
         Disc d = null;
         Transaction tx = null;
-        try (Session session = HibernateUtilities.getSessionFactory().openSession()) {
+        try (Session session = factory.openSession()) {
             tx = session.beginTransaction();
             Query query = session.createQuery("from Disc where barcode='" + disc.getBarcode() + "'");
             List<Disc> discs = query.list();

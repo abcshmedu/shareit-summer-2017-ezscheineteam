@@ -3,14 +3,15 @@
         "-//Hibernate/Hibernate Configuration DTD//EN"
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
-    <session-factory>
-        <property name="connection.url"/>
-        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="hibernate.connection.username">appuser</property>
-        <property name="hibernate.connection.password">appuser</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/shareit</property>
-        <property name="hibernate.default_schema">shareit</property>
-        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+    <session-factory>    
+    <property name="connection.url">jdbc:hsqldb:file:db/shareitDB;shutdown=true;hsqldb.write_delay=false;</property>
+        <property name="connection.driver_class">org.hsqldb.jdbcDriver</property>
+        <property name="dialect">org.hibernate.dialect.HSQLDialect</property>
+        <property name="connection.username">sa</property>
+        <property name="connection.password"/>
+        <property name="hbm2ddl.auto">update</property>
+        <!--<property name="show_sql">true</property>-->      
+
         <mapping resource="edu/hm/shareit/model/Book.hbm.xml" />
         <mapping resource="edu/hm/shareit/model/Disc.hbm.xml" />
         <mapping resource="edu/hm/shareit/model/User.hbm.xml" />
