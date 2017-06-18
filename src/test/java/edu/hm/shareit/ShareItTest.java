@@ -26,7 +26,6 @@ public class ShareItTest {
     
     @Test
     public void testJsonMappingException() {
-        System.out.println(token);
         given()
         .header(AuthenticationFilter.TOKEN_HEADER_FIELD, token)
         .contentType(ContentType.JSON)
